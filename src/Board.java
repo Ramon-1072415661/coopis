@@ -8,26 +8,20 @@ public class Board extends JPanel implements ActionListener {
 
     private Color[][] grid = new Color[ROWS][COLS];
     private final Timer timer = new Timer(DELAY, this);
-    private Tetromino current_p1 = getInitialTetromino(2);
-    private Tetromino current_p2 = getInitialTetromino(7);
+    private Player p1;
+    private Player p2;
+
 
     private final CellRenderer cellRenderer = new CellRenderer(CELL_SIZE, CELL_SHADOW_BEVEL);
 
-    // Game state flag
     private boolean gameOver = false;
 
     private void startGame() {
-        current_p1 = getInitialTetromino(2);
-        current_p2 = getInitialTetromino(7);
+        p1 = new Player(2);
+        p2 = new Player(7);
         grid = new Color[ROWS][COLS];
         gameOver = false;
         timer.start();
-    }
-
-    private Tetromino getInitialTetromino(int initialPosition) {
-        Tetromino tetromino = Tetromino.random();
-        tetromino.x = initialPosition;
-        return tetromino;
     }
 
     public Board() {
@@ -50,22 +44,28 @@ public class Board extends JPanel implements ActionListener {
 
                 // Normal game controls
                 if (keyCode == KeyEvent.VK_LEFT) {
-                    move(-1, current_p2);
+                    move(-1, p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    move(1, current_p2);
+                    move(1, p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_DOWN) {
-                    drop(current_p2);
+                    drop(p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_UP) {
-                    rotate(current_p2);
+                    rotate(p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_A) {
-                    move(-1, current_p1);
+                    move(-1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_D) {
-                    move(1, current_p1);
+                    move(1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_S) {
-                    drop(current_p1);
+                    drop(p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_W) {
-                    rotate(current_p1);
+                    rotate(p1.tetromino);
+                } else if (keyCode == KeyEvent.VK_Q){ //insert
+                      p1.insertInHold();
+
+                } else if (keyCode == KeyEvent.VK_E){ //swap
+                    p1.swapTetromino();
                 }
+
                 repaint();
             }
         });
@@ -83,28 +83,27 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        boolean p1Collided = collides(0, 1, current_p1);
-        boolean p2Collided = collides(0, 1, current_p2);
+        boolean p1Collided = collides(0, 1, p1.tetromino);
+        boolean p2Collided = collides(0, 1, p2.tetromino);
 
         if (!p1Collided) {
-            current_p1.y++;
+            p1.tetromino.y++;
         } else {
-            fixToGrid(current_p1);
+            fixToGrid(p1.tetromino);
             clearLines();
-            current_p1 = Tetromino.random();
-            current_p1.x = 2;
+            p1.getNextTretomino();
         }
 
         if (!p2Collided) {
-            current_p2.y++;
+            p2.tetromino.y++;
         } else {
-            fixToGrid(current_p2);
+            fixToGrid(p2.tetromino);
             clearLines();
-            current_p2 = Tetromino.random();
-            current_p2.x = 7;
+            p2.tetromino = Tetromino.random();
+            p2.tetromino.x = 7;
         }
 
-        if ((p1Collided && collides(0, 0, current_p1)) || (p2Collided && collides(0, 0, current_p2))) {
+        if ((p1Collided && collides(0, 0, p1.tetromino)) || (p2Collided && collides(0, 0, p2.tetromino))) {
             gameOver = true;
             timer.stop();
         }
@@ -118,8 +117,8 @@ public class Board extends JPanel implements ActionListener {
         paintFilledCells(g);
 
         if (!gameOver) {
-            paintCurrentShapeCells(g, current_p1);
-            paintCurrentShapeCells(g, current_p2);
+            paintCurrentShapeCells(g, p1.tetromino);
+            paintCurrentShapeCells(g, p2.tetromino);
         } else {
             paintGameOverOverlay(g);
         }
@@ -264,11 +263,11 @@ public class Board extends JPanel implements ActionListener {
     private void move(int dx, Tetromino tetromino) {
         int width = tetromino.shape[0].length;
 
-        if (tetromino == current_p1 && (tetromino.x + dx >= 0 && tetromino.x + dx + width <= COLS / 2)) {
+        if (tetromino == p1.tetromino && (tetromino.x + dx >= 0 && tetromino.x + dx + width <= COLS / 2)) {
             if (canMoveWithoutCollision(dx, 0, tetromino)) {
                 tetromino.x += dx;
             }
-        } else if (tetromino == current_p2 && (tetromino.x + dx >= COLS / 2 && tetromino.x + dx + width <= COLS)) {
+        } else if (tetromino == p2.tetromino && (tetromino.x + dx >= COLS / 2 && tetromino.x + dx + width <= COLS)) {
             if (canMoveWithoutCollision(dx, 0, tetromino)) {
                 tetromino.x += dx;
             }
