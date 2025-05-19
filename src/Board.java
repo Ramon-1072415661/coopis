@@ -51,6 +51,10 @@ public class Board extends JPanel implements ActionListener {
                     drop(p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_UP) {
                     rotate(p2.tetromino);
+                } else if (keyCode == KeyEvent.VK_N) {
+                    p2.insertInHold();
+                } else if (keyCode == KeyEvent.VK_M) {
+                    p2.swapTetromino();
                 } else if (keyCode == KeyEvent.VK_A) {
                     move(-1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_D) {
