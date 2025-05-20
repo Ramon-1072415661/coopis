@@ -1,5 +1,6 @@
+package Board.Colors;
+
 import java.awt.*;
-import java.util.Random;
 
 public final class Colors {
     // Private constructor to prevent instantiation
