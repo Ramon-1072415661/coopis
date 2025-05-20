@@ -281,6 +281,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
+
     private void rotate(Tetromino tetromino) {
         // Store the current rotation state
         int originalRotationState = tetromino.getRotationState();
@@ -300,14 +301,27 @@ public class Board extends JPanel implements ActionListener {
         for (int[] offset : kickData[originalRotationState]) {
             int testX = rotated.x + offset[0];
             int testY = rotated.y + offset[1];
+            int dx = testX - rotated.x;
+            int width = rotated.shape[0].length;
 
-            if (!collides(testX - rotated.x, testY - rotated.y, rotated)) {
+            if (!collides(dx, testY - rotated.y, rotated)) {
                 // Success - apply the rotation and the offset
-                tetromino.shape = rotatedShape;
-                tetromino.x = testX;
-                tetromino.y = testY;
-                tetromino.setRotationState(newRotationState);
-                return;
+
+
+                if (tetromino == current_p1 && (rotated.x + dx >= 0 && rotated.x + dx + width <= COLS / 2)) {
+                    tetromino.shape = rotatedShape;
+                    tetromino.x = testX;
+                    tetromino.y = testY;
+                    tetromino.setRotationState(newRotationState);
+                    return;
+                } else if (tetromino == current_p2 && (rotated.x + dx >= COLS / 2 && rotated.x + dx + width <= COLS)) {
+                    tetromino.shape = rotatedShape;
+                    tetromino.x = testX;
+                    tetromino.y = testY;
+                    tetromino.setRotationState(newRotationState);
+                    return;
+                }
+
             }
         }
 
