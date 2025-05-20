@@ -1,3 +1,5 @@
+package Board.TetrominoLogic;
+
 public class GetTetrominoLogic {
     private boolean charged = false;
     private int initialPosition;

@@ -1,5 +1,6 @@
+package Board.TetrominoLogic;
+
 import java.awt.*;
-import java.util.Random;
 
 public class Tetromino {
     public int[][] shape;

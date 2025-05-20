@@ -1,4 +1,4 @@
-package DSA;
+package Board.DSA;
 
 import java.util.ArrayList;
 

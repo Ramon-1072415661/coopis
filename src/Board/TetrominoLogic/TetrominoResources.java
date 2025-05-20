@@ -1,3 +1,5 @@
+package Board.TetrominoLogic;
+import Board.Colors.Colors;
 import java.awt.*;
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package DSA;
+package Board.DSA;
 
 public class Node <T>{
     public T data;

@@ -1,4 +1,6 @@
-import DSA.Stack;
+package Board.TetrominoLogic;
+
+import Board.DSA.Stack;
 
 import java.util.ArrayList;
 
