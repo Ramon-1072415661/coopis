@@ -1,5 +1,4 @@
 public class GetTetrominoLogic {
-    private boolean charged = false;
     private int initialPosition;
     private TetrominoHolder holder;
 //    private TetrominoQueue queue;
@@ -11,7 +10,7 @@ public class GetTetrominoLogic {
     }
 
     public Tetromino nextTetromino() {
-        if(charged && !holder.isEmpty()) {
+        if(!holder.isEmpty()) {
             Tetromino holder_tetromino = holder.pop();
             holder_tetromino.x = initialPosition;
             return holder_tetromino;

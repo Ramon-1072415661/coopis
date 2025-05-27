@@ -37,6 +37,12 @@ public class TetrominoHolder {
         poped_tetromino.y = initial_y;
         return poped_tetromino;
     }
+    public void invert(){
+        if(this.isEmpty() || stack.size() < 2) return;
+        Stack<Tetromino> new_stack = new Stack<>();
+        for (Tetromino tetromino: stack) new_stack.add(tetromino);
+        stack = new_stack;
+    }
 
     public void resetSwap(){
         swaped = false;

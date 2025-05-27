@@ -1,15 +1,16 @@
 package DSA;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Stack <T> {
-    private Node<T> first;
-    private Node<T> last;
+public class Stack <T> implements Iterable<T> {
+    private Node<T> bottom;
+    private Node<T> top;
     private int size = 0;
 
     public Stack() {
-        this.first = null;
-        this.last = null;
+        this.bottom = null;
+        this.top = null;
     }
 
     public boolean isEmpty(){
@@ -21,36 +22,36 @@ public class Stack <T> {
     }
     private void add(Node<T> new_node){
         if(isEmpty()) {
-            first = last = new_node;
+            bottom = top = new_node;
             size++;
             return;
         }
-        last.next = new_node;
-        new_node.previous = last;
-        last = new_node;
+        top.next = new_node;
+        new_node.previous = top;
+        top = new_node;
         size++;
     }
     public T peek(){
-        return last.data;
+        return top.data;
     }
     public T pop(){
         if (isEmpty()) throw new NullPointerException();
-        if (last == first) {
+        if (top == bottom) {
             size--;
-            return first.data;
+            return bottom.data;
         }
 
-        Node<T> old_last = last;
-        Node<T> new_last = last.previous;
-        last.previous = null;
+        Node<T> old_last = top;
+        Node<T> new_last = top.previous;
+        top.previous = null;
         new_last.next = null;
-        last = new_last;
+        top = new_last;
         size--;
         return old_last.data;
     }
     public ArrayList<T> get_list() {
         ArrayList<T> list = new ArrayList<>();
-        Node<T> actual = first;
+        Node<T> actual = bottom;
 
         for (int i = 0; i < size; i++) {
             list.add(actual.data);
@@ -59,5 +60,13 @@ public class Stack <T> {
 
         return list;
     }
+    public int size(){
+        return size;
+    }
 
+
+    @Override
+    public Iterator<T> iterator() {
+        return new StackIterator<>(top);
+    }
 }
