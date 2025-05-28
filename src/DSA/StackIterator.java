@@ -18,7 +18,7 @@ public class StackIterator <T> implements Iterator<T> {
     public T next() {
         if (!hasNext()) throw new NoSuchElementException();
         T item = current.data;
-        current = current.next;
+        current = current.previous;
         return item;
     }
 }

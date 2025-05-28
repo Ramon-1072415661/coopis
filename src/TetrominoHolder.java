@@ -3,7 +3,8 @@ import DSA.Stack;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class TetrominoHolder implements Iterable<Tetromino> {
+public class TetrominoHolder implements Iterable<Tetromino>,PanelObservable   {
+    private final ArrayList<PanelObserver> observers = new  ArrayList<>();
     private boolean swaped = false;
     private  Stack<Tetromino> stack;
 
@@ -24,6 +25,7 @@ public class TetrominoHolder implements Iterable<Tetromino> {
             Tetromino peek_tetromino = this.pop();
             stack.add(actual);
             swaped = true;
+            notifyObservers();
             return peek_tetromino;
         } catch (NullPointerException e){
             return actual;
@@ -32,6 +34,8 @@ public class TetrominoHolder implements Iterable<Tetromino> {
 
     public void insert(Tetromino actual) {
         stack.add(actual);
+        notifyObservers();
+
     }
     public Tetromino pop(){
         return stack.pop();
@@ -41,6 +45,7 @@ public class TetrominoHolder implements Iterable<Tetromino> {
         Stack<Tetromino> new_stack = new Stack<>();
         for (Tetromino tetromino: stack) new_stack.add(tetromino);
         stack = new_stack;
+        notifyObservers();
     }
 
     public void resetSwap(){
@@ -54,5 +59,17 @@ public class TetrominoHolder implements Iterable<Tetromino> {
     @Override
     public Iterator<Tetromino> iterator() {
         return stack.iterator();
+    }
+
+    @Override
+    public void addObserver(PanelObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for( PanelObserver observer : observers) {
+            observer.update();
+        }
     }
 }
