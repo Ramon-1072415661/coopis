@@ -3,7 +3,8 @@ import DSA.Stack;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class TetrominoHolder implements Iterable<Tetromino> {
+public class TetrominoHolder implements Iterable<Tetromino>,PanelObservable   {
+    private final ArrayList<PanelObserver> observers = new  ArrayList<>();
     private boolean swaped = false;
     private  Stack<Tetromino> stack;
 
@@ -54,5 +55,17 @@ public class TetrominoHolder implements Iterable<Tetromino> {
     @Override
     public Iterator<Tetromino> iterator() {
         return stack.iterator();
+    }
+
+    @Override
+    public void addObserver(PanelObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for( PanelObserver observer : observers) {
+            observer.update();
+        }
     }
 }

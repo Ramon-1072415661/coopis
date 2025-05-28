@@ -4,13 +4,14 @@ import DSA.Stack;
 import javax.swing.*;
 import java.awt.*;
 
-public class TetrominoPanel extends JPanel {
+public class TetrominoPanel<T extends Iterable<Tetromino> & PanelObservable> extends JPanel implements PanelObserver {
     private static final int CELL_SIZE = 30, OFFSET_Y = 40,SHADOW = CELL_SIZE/6, PADDING = 50;
-    private final Iterable<Tetromino> collection;
+    private final T  collection;
 
 
-    public TetrominoPanel(Iterable<Tetromino> collection) {
+    public TetrominoPanel(T collection) {
         this.collection = collection;
+        collection.addObserver(this);
     }
 
     @Override
@@ -24,5 +25,10 @@ public class TetrominoPanel extends JPanel {
             int tetrominoHeight = tetrominoRender.height() * CELL_SIZE;
             y += tetrominoHeight+ OFFSET_Y;
         }
+    }
+
+    @Override
+    public void update() {
+        repaint();
     }
 }
