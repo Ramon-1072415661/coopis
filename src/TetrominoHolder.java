@@ -25,6 +25,7 @@ public class TetrominoHolder implements Iterable<Tetromino>,PanelObservable   {
             Tetromino peek_tetromino = this.pop();
             stack.add(actual);
             swaped = true;
+            notifyObservers();
             return peek_tetromino;
         } catch (NullPointerException e){
             return actual;
@@ -33,6 +34,8 @@ public class TetrominoHolder implements Iterable<Tetromino>,PanelObservable   {
 
     public void insert(Tetromino actual) {
         stack.add(actual);
+        notifyObservers();
+
     }
     public Tetromino pop(){
         return stack.pop();
@@ -42,6 +45,7 @@ public class TetrominoHolder implements Iterable<Tetromino>,PanelObservable   {
         Stack<Tetromino> new_stack = new Stack<>();
         for (Tetromino tetromino: stack) new_stack.add(tetromino);
         stack = new_stack;
+        notifyObservers();
     }
 
     public void resetSwap(){
