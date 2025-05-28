@@ -7,7 +7,7 @@ public class TetrominoRender implements Drawable{
     private Tetromino tetromino;
     private Render render;
     public TetrominoRender(Tetromino tetromino, Render render) {
-        this.tetromino = tetromino;
+        this.tetromino = normalizeTetrominos(tetromino);
         this.render = render;
     }
 
@@ -22,6 +22,13 @@ public class TetrominoRender implements Drawable{
         return tetromino.shape[row].length;
     }
 
+    public Tetromino normalizeTetrominos(Tetromino tetromino){
+        if(isI(tetromino)) return new Tetromino(tetromino.rotate(),tetromino.color) ;
+        return tetromino;
+    }
+    private boolean isI(Tetromino tetromino){
+        return tetromino.shape.length == 4 && tetromino.shape[0].length == 1;
+    }
     @Override
     public void draw(Graphics g, int x, int y, int cellSize) {
         for (int row = 0; row < height(); row++) {
