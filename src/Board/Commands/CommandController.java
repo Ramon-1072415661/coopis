@@ -12,7 +12,7 @@ public class CommandController {
     public CommandController(int columnStart, int columnEnd) {
         keyMap.put(KeyEvent.VK_A, new MoveLeftCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_D, new MoveRightCommand(columnStart,columnEnd));
-        keyMap.put(KeyEvent.VK_W, new RotateCommand());
+        keyMap.put(KeyEvent.VK_W, new RotateCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_G, new SwapCommand());
         keyMap.put(KeyEvent.VK_H, new InsertCommand());
         keyMap.put(KeyEvent.VK_S, new DropCommand());

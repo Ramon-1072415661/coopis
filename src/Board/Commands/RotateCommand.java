@@ -4,11 +4,19 @@ import Board.Player;
 import Board.TetrominoLogic.Tetromino;
 
 public class RotateCommand implements Command{
+    private final int columnStart, columnEnd;
+
+    public RotateCommand(int columnStart, int columnEnd) {
+        this.columnStart = columnStart;
+        this.columnEnd = columnEnd;
+    }
+
     @Override
     public void execute(Grid grid, Player player) {
-        rotate(player.tetromino,grid);
+        rotate(player,grid);
     }
-    private void rotate(Tetromino tetromino, Grid grid ) {
+    private void rotate(Player player, Grid grid) {
+        Tetromino tetromino = player.tetromino;
         // Store the current rotation state
         int originalRotationState = tetromino.getRotationState();
         int newRotationState = (originalRotationState + 1) % 4;
@@ -27,8 +35,9 @@ public class RotateCommand implements Command{
         for (int[] offset : kickData[originalRotationState]) {
             int testX = rotated.x + offset[0];
             int testY = rotated.y + offset[1];
-
-            if (!grid.collides(testX - rotated.x, testY - rotated.y, rotated)) {
+            int dx = testX - rotated.x;
+            int width = rotated.shape[0].length;
+            if (!grid.collides(dx, testY - rotated.y, rotated) && (rotated.x + dx + width >= columnStart && rotated.x + dx+width <=columnEnd)) {
                 // Success - apply the rotation and the offset
                 tetromino.shape = rotatedShape;
                 tetromino.x = testX;
