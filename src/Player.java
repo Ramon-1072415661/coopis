@@ -1,3 +1,4 @@
+import DSA.Stack;
 
 public class Player {
     public Tetromino tetromino;
@@ -5,8 +6,8 @@ public class Player {
     private GetTetrominoLogic next_tetromino_logic;
 
     public Player(int initialPosition) {
-        holder = new TetrominoHolder(initialPosition,0);
-        next_tetromino_logic = new GetTetrominoLogic(initialPosition, holder);
+        holder = new TetrominoHolder();
+        next_tetromino_logic = new GetTetrominoLogic(initialPosition);
         this.getNextTretomino();
     }
 

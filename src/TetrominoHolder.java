@@ -1,18 +1,20 @@
 import DSA.Stack;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class TetrominoHolder {
+public class TetrominoHolder implements Iterable<Tetromino> {
     private boolean swaped = false;
     private  Stack<Tetromino> stack;
-    private int initial_x;
-    private int initial_y;
 
-    public TetrominoHolder(int initial_x,int initial_y) {
-        stack = new Stack<Tetromino>();
-        this.initial_y = initial_y;
-        this.initial_x = initial_x;
+    public TetrominoHolder() {
+        this(new Stack<>());
     }
+    public TetrominoHolder(Stack<Tetromino> stack) {
+        this.stack = stack;
+
+    }
+
 
     public Tetromino swap(Tetromino actual) {
         if(swaped){
@@ -32,10 +34,7 @@ public class TetrominoHolder {
         stack.add(actual);
     }
     public Tetromino pop(){
-        Tetromino poped_tetromino = stack.pop();
-        poped_tetromino.x = initial_x;
-        poped_tetromino.y = initial_y;
-        return poped_tetromino;
+        return stack.pop();
     }
     public void invert(){
         if(this.isEmpty() || stack.size() < 2) return;
@@ -51,7 +50,9 @@ public class TetrominoHolder {
     public boolean isEmpty(){
         return stack.get_list().isEmpty();
     }
-    public ArrayList<Tetromino> get_holded_tetrominos(){
-        return  stack.get_list();
+
+    @Override
+    public Iterator<Tetromino> iterator() {
+        return stack.iterator();
     }
 }
