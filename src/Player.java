@@ -25,4 +25,7 @@ public class Player {
         this.getNextTretomino();
     }
 
+    public TetrominoHolder getHolder() {
+        return holder;
+    }
 }
