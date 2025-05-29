@@ -1,10 +1,24 @@
 package Board.Commands;
 
 import Board.Player;
+import Board.TetrominoLogic.Tetromino;
+import Board.TetrominoLogic.TetrominoHolder;
+import Board.TetrominoLogic.TetrominoResources;
 
 public class InsertCommand implements Command {
     @Override
     public void execute(Grid grid, Player player) {
-        player.insertInHold();
+        Tetromino tetromino = player.tetromino;
+        TetrominoHolder holder = player.getHolder();
+        try {
+            TetrominoResources resources = TetrominoResources.getInstance();
+            int position = resources.tetrominoPosition(tetromino);
+            Tetromino tetrominoToHold = new Tetromino(resources.getShapes()[position],tetromino.color);
+            holder.insert(tetrominoToHold);
+            player.getNextTretomino();
+        } catch (ClassNotFoundException e) {
+            holder.insert(tetromino);
+            player.getNextTretomino();
+        }
     }
 }

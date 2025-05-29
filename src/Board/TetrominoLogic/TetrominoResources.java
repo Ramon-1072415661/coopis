@@ -1,5 +1,7 @@
 package Board.TetrominoLogic;
 import Board.Colors.Colors;
+import org.w3c.dom.ranges.RangeException;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -51,5 +53,13 @@ public final class TetrominoResources {
 
     public Random getRandom() {
         return rand;
+    }
+
+    public int tetrominoPosition(Tetromino tetromino) throws ClassNotFoundException {
+        Color tetrominoColor = tetromino.color;
+        for ( int i =0; i < colors.length; i++){
+            if(tetrominoColor == colors[i]) return i;
+        }
+        throw new ClassNotFoundException();
     }
 }

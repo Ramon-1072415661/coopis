@@ -1,5 +1,6 @@
 package Board;
 
+import Board.CellRenders.CellRenderer;
 import Board.Commands.Grid;
 import Board.TetrominoLogic.Tetromino;
 import javax.swing.*;
@@ -22,14 +23,15 @@ public class Board extends JPanel implements ActionListener {
     private boolean gameOver = false;
 
     private void startGame() {
-        p1 = new Player(2,0,COLS/2);
+//        p1 = new Player(2,0,COLS/2);
         p2 = new Player(7,COLS/2,COLS);
         grid = new Grid(COLS,ROWS);
         gameOver = false;
         timer.start();
     }
 
-    public Board() {
+    public Board(Player player) {
+        p1 = player;
         setFocusable(true);
         startGame();
 
