@@ -1,7 +1,8 @@
-package Board.Commands;
+package Board.Controls.Commands;
+import Board.Controls.Grid;
 import Board.Player;
 import Board.TetrominoLogic.Tetromino;
-public class MoveLeftCommand extends MoveCommand implements Command {
+ public class MoveLeftCommand extends MoveCommand implements Command {
 
     public MoveLeftCommand( int columnStart, int columnEnd) {
         super( columnStart, columnEnd);

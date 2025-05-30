@@ -1,7 +1,8 @@
-package Board.Commands;
+package Board.Controls.Commands;
+import Board.Controls.Grid;
 import Board.TetrominoLogic.Tetromino;
 
-public class MoveCommand {
+ class MoveCommand {
     protected  int columnStart, columnEnd;
 
     public MoveCommand( int columnStart, int columnEnd) {
@@ -12,7 +13,7 @@ public class MoveCommand {
         int width = tetromino.shape[0].length;
         return tetromino.x + dx >= columnStart && tetromino.x + dx + width <= columnEnd;
     }
-    boolean canMoveWithoutCollision(Grid grid,int dx, Tetromino tetromino){
+    boolean canMoveWithoutCollision(Grid grid, int dx, Tetromino tetromino){
         return grid.canMoveWithoutCollision(dx,0,tetromino);
     }
 

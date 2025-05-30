@@ -1,5 +1,6 @@
-package Board.Commands;
+package Board.Controls.Commands;
 
+import Board.Controls.Grid;
 import Board.Player;
 import Board.TetrominoLogic.Tetromino;
 
