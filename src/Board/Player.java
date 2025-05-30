@@ -1,23 +1,24 @@
 package Board;
 
-import Board.Commands.Grid;
+import Board.Controls.Controller;
+import Board.Controls.ControllerFactory;
+import Board.Controls.Controls;
+import Board.Controls.Grid;
 import Board.TetrominoLogic.GetTetrominoLogic;
 import Board.TetrominoLogic.Tetromino;
 import Board.TetrominoLogic.TetrominoHolder;
-import Board.Commands.CommandController;
-import Board.TetrominoLogic.TetrominoResources;
 
 public class Player {
     public Tetromino tetromino;
     private final TetrominoHolder holder;
     private final GetTetrominoLogic next_tetromino_logic;
-    private final CommandController controller;
+    private final Controller controller;
 
-    public Player(int initialPosition, int columnStart, int columnEnd) {
+    public Player(int initialPosition, int columnStart, int columnEnd, Controls controls) {
         holder = new TetrominoHolder();
         next_tetromino_logic = new GetTetrominoLogic(initialPosition);
         this.getNextTretomino();
-        controller = new CommandController(initialPosition,columnStart,columnEnd);
+        controller =  ControllerFactory.getController(initialPosition,columnStart,columnEnd,controls);
     }
 
     public void getNextTretomino(){

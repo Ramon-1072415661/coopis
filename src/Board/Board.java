@@ -1,7 +1,8 @@
 package Board;
 
 import Board.CellRenders.CellRenderer;
-import Board.Commands.Grid;
+import Board.Controls.Controls;
+import Board.Controls.Grid;
 import Board.TetrominoLogic.Tetromino;
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void startGame() {
 //        p1 = new Player(2,0,COLS/2);
-        p2 = new Player(7,COLS/2,COLS);
+        p2 = new Player(7,COLS/2,COLS, Controls.ARROWS);
         grid = new Grid(COLS,ROWS);
         gameOver = false;
         timer.start();
