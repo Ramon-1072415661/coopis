@@ -1,4 +1,5 @@
 import Board.Board;
+import Board.Controls.Controls;
 import Board.Panel.PanelDisplay;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class TetrisGame {
         frame.getContentPane().setBackground(new Color(0x666b87));
         frame.setLayout(new BorderLayout()); // simpler layout
         frame.setResizable(false);
-        Player player = new Player(2,0,COLS/2);
+        Player player = new Player(2,0,COLS/2, Controls.WASD);
         PanelDisplay painel = new PanelDisplay(player);
         frame.add(painel,BorderLayout.WEST);
         Board board = new Board(player);
