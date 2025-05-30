@@ -1,4 +1,4 @@
-package Board.Commands;
+package Board.Controls;
 
 import Board.TetrominoLogic.Tetromino;
 

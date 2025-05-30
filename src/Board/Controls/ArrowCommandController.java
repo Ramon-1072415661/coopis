@@ -7,10 +7,10 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
- class Player2CommandController implements Controller{
+ class ArrowCommandController implements Controller{
     private final Map<Integer, Command> keyMap = new HashMap<>();
 
-     Player2CommandController(int initialPosition, int columnStart, int columnEnd) {
+     ArrowCommandController(int initialPosition, int columnStart, int columnEnd) {
         keyMap.put(KeyEvent.VK_LEFT, new MoveLeftCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_RIGHT, new MoveRightCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_UP, new RotateCommand(columnStart,columnEnd));
