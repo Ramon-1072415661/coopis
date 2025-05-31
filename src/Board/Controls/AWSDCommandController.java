@@ -17,6 +17,7 @@ import java.util.Map;
         keyMap.put(KeyEvent.VK_E, new SwapCommand(initialPosition));
         keyMap.put(KeyEvent.VK_Q, new InsertCommand());
         keyMap.put(KeyEvent.VK_S, new DropCommand());
+        keyMap.put(KeyEvent.VK_R, new InverseHoldCommand());
     }
     public void handleKey(Grid grid, int keyCode, Player player){
         Command cmd = keyMap.get(keyCode);
