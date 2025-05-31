@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
+    private static final int HOLDER_LIMIT = 2;
     private final ArrayList<PanelObserver> observers = new  ArrayList<>();
     private boolean swaped = false;
     private  Stack<Tetromino> stack;
@@ -27,7 +28,9 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
         }
         try {
             Tetromino peek_tetromino = this.pop();
-            stack.add(actual);
+            TetrominoResources resources = TetrominoResources.getInstance();
+            Tetromino tetrominoToAdd = resources.createDefaultCopyOf(actual);
+            stack.add(tetrominoToAdd);
             swaped = true;
             notifyObservers();
             return peek_tetromino;
@@ -35,9 +38,13 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
             return actual;
         }
     }
-
+    public boolean isOnLimit(){
+        return stack.size() == HOLDER_LIMIT;
+    }
     public void insert(Tetromino actual) {
-        stack.add(actual);
+        TetrominoResources resources = TetrominoResources.getInstance();
+        Tetromino tetrominoToInsert = resources.createDefaultCopyOf(actual);
+        stack.add(tetrominoToInsert);
         notifyObservers();
 
     }
