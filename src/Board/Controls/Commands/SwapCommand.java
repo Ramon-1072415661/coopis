@@ -18,6 +18,8 @@ public class SwapCommand implements Command {
         Tetromino tetromino = player.tetromino;
         TetrominoHolder holder = player.getHolder();
         tetromino = holder.swap(tetromino);
+        if(player.tetromino == tetromino) return;
+        player.tetromino = tetromino;
         tetromino.x = initialPositionX;
         tetromino.y = initialPositionY;
     }
