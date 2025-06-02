@@ -1,13 +1,11 @@
 public class GetTetrominoLogic {
     private int initialXPosition;
-    private TetrominoQueue queue = new TetrominoQueue();
+    private TetrominoQueue queue;
 
 
-    public GetTetrominoLogic(int initialXPosition) {
+    public GetTetrominoLogic(int initialXPosition,TetrominoQueue queue) {
         this.initialXPosition = initialXPosition;
-        for (int i = 0; i < 4; i++) {
-            queue.add(randomTetromino());
-        }
+        this.queue = queue;
     }
 
     public Tetromino nextTetromino() {

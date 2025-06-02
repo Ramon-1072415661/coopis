@@ -4,10 +4,12 @@ public class Player {
     public Tetromino tetromino;
     private TetrominoHolder holder;
     private GetTetrominoLogic next_tetromino_logic;
+    private TetrominoQueue queue;
 
     public Player(int initialPosition) {
         holder = new TetrominoHolder();
-        next_tetromino_logic = new GetTetrominoLogic(initialPosition);
+        queue = new TetrominoQueue();
+        next_tetromino_logic = new GetTetrominoLogic(initialPosition,queue);
         this.getNextTretomino();
     }
 
@@ -27,5 +29,9 @@ public class Player {
 
     public TetrominoHolder getHolder() {
         return holder;
+    }
+
+    public TetrominoQueue getQueue() {
+        return queue;
     }
 }
