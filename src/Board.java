@@ -313,13 +313,13 @@ public class Board extends JPanel implements ActionListener {
                 // Success - apply the rotation and the offset
 
 
-                if (tetromino == current_p1 && (rotated.x + dx >= 0 && rotated.x + dx + width <= COLS / 2)) {
+                if (tetromino == p1.tetromino && (rotated.x + dx >= 0 && rotated.x + dx + width <= COLS / 2)) {
                     tetromino.shape = rotatedShape;
                     tetromino.x = testX;
                     tetromino.y = testY;
                     tetromino.setRotationState(newRotationState);
                     return;
-                } else if (tetromino == current_p2 && (rotated.x + dx >= COLS / 2 && rotated.x + dx + width <= COLS)) {
+                } else if (tetromino == p2.tetromino && (rotated.x + dx >= COLS / 2 && rotated.x + dx + width <= COLS)) {
                     tetromino.shape = rotatedShape;
                     tetromino.x = testX;
                     tetromino.y = testY;
