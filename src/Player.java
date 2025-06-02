@@ -8,7 +8,7 @@ public class Player {
 
     public Player(int initialPosition) {
         holder = new TetrominoHolder();
-        queue = new TetrominoQueue();
+        queue = new TetrominoQueue(initialPosition);
         next_tetromino_logic = new GetTetrominoLogic(initialPosition,queue);
         this.getNextTretomino();
     }
