@@ -19,14 +19,14 @@ public class Board extends JPanel implements ActionListener {
     private boolean gameOver = false;
 
     private void startGame() {
-        p1 = new Player(2);
-        p2 = new Player(7);
         grid = new Color[ROWS][COLS];
         gameOver = false;
         timer.start();
     }
 
-    public Board() {
+    public Board(Player player1, Player player2) {
+        p1 = player1;
+        p2 = player2;
         setFocusable(true);
         startGame();
 
@@ -105,8 +105,7 @@ public class Board extends JPanel implements ActionListener {
         } else {
             fixToGrid(p2.tetromino);
             clearLines();
-            p2.tetromino = Tetromino.random();
-            p2.tetromino.x = 7;
+            p2.getNextTretomino();
         }
 
         if ((p1Collided && collides(0, 0, p1.tetromino)) || (p2Collided && collides(0, 0, p2.tetromino))) {

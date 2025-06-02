@@ -8,6 +8,11 @@ public class PanelDisplay extends JPanel {
         Dimension holder_size = holder.getPreferredSize();
         holder.setMaximumSize(holder_size);
         holder.setMaximumSize(holder_size);
+        NextPanel next = new NextPanel(player);
+        Dimension next_size = next.getPreferredSize();
+        next.setMaximumSize(next_size);
+        next.setMinimumSize(next_size);
         add(holder);
+        add(next);
     }
 }
