@@ -9,10 +9,9 @@ public class TetrominoQueue implements Iterable<Tetromino>, PanelObservable {
     private final ArrayList<PanelObserver> observers = new ArrayList<>();
     private Queue<Tetromino> queue = new Queue<>();
 
-    public TetrominoQueue(int initialXPosition) {
+    public TetrominoQueue() {
         for (int i = 0; i < TETROMINO_QUANTITY; i++){
             Tetromino tetromino = Tetromino.random();
-            tetromino.x = initialXPosition;
             queue.add(tetromino);
         }
     }

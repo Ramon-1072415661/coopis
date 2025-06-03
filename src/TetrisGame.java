@@ -10,12 +10,13 @@ public class TetrisGame {
         frame.getContentPane().setBackground(new Color(0x666b87));
         frame.setLayout(new BorderLayout()); // simpler layout
         frame.setResizable(false);
-        Player p1 = new Player(2);
-        Player p2 = new Player(7);
+        TetrominoHolder universalHold = new TetrominoHolder();
+        TetrominoQueue universalNext = new TetrominoQueue();
+
+        Player p1 = new Player(2,universalNext,universalHold);
+        Player p2 = new Player(7,universalNext,universalHold);
         PanelDisplay panel = new PanelDisplay(p1);
-        PanelDisplay panel2 = new PanelDisplay(p2);
         frame.add(panel,BorderLayout.WEST);
-        frame.add(panel2,BorderLayout.EAST);
         Board board = new Board(p1,p2);
         board.setPreferredSize(new Dimension(1920, 1080));
         frame.add(board, BorderLayout.CENTER);
