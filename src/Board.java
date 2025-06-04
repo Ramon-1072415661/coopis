@@ -347,4 +347,9 @@ public class Board extends JPanel implements ActionListener {
         // I-piece is typically 4x1 or 1x4
         return (tetromino.shape.length == 4 && tetromino.shape[0].length == 1) || (tetromino.shape.length == 1 && tetromino.shape[0].length == 4);
     }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(10 * CELL_SIZE, 20 * CELL_SIZE);
+    }
 }
