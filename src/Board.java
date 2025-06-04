@@ -10,6 +10,8 @@ public class Board extends JPanel implements ActionListener {
 
     private Color[][] grid = new Color[ROWS][COLS];
     private final Timer timer = new Timer(DELAY, this);
+
+    ScoreSingleton score = ScoreSingleton.getInstance();
     private Player p1;
     private Player p2;
 
@@ -151,7 +153,7 @@ public class Board extends JPanel implements ActionListener {
         FontMetrics smallerMetrics = g2d.getFontMetrics();
         textWidth = smallerMetrics.stringWidth(retryText);
         g2d.drawString(retryText, (COLS * CELL_SIZE - textWidth) / 2, ROWS * CELL_SIZE / 2 + 20);
-
+        score.calculeScore();
         g2d.dispose();
     }
 
@@ -168,7 +170,6 @@ public class Board extends JPanel implements ActionListener {
     private void clearLines() {
         for (int row = ROWS - 1; row >= 0; row--) {
             boolean full = true;
-
             for (int col = 0; col < COLS; col++) {
                 if (grid[row][col] == null) {
                     full = false;
@@ -177,11 +178,15 @@ public class Board extends JPanel implements ActionListener {
             }
 
             if (full) {
+                int rowsCleaned = 0;
                 for (int r = row; r > 0; r--) {
                     System.arraycopy(grid[r - 1], 0, grid[r], 0, COLS);
                 }
                 grid[0] = new Color[COLS];
                 row++;
+                rowsCleaned++;
+                score.addCleanedRows(rowsCleaned);
+                System.out.printf("Rows cleaned = %d%n", score.rowsCleaned);
             }
         }
     }
