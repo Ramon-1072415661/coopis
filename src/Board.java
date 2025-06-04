@@ -19,14 +19,14 @@ public class Board extends JPanel implements ActionListener {
     private boolean gameOver = false;
 
     private void startGame() {
-        p1 = new Player(2);
-        p2 = new Player(7);
         grid = new Color[ROWS][COLS];
         gameOver = false;
         timer.start();
     }
 
-    public Board() {
+    public Board(Player player1, Player player2) {
+        p1 = player1;
+        p2 = player2;
         setFocusable(true);
         startGame();
 
@@ -63,11 +63,11 @@ public class Board extends JPanel implements ActionListener {
                     move(1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_S) {
                     drop(p1.tetromino);
+
                 } else if (keyCode == KeyEvent.VK_W) {
                     rotate(p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_Q){ //insert
                       p1.insertInHold();
-
                 } else if (keyCode == KeyEvent.VK_E){ //swap
                     p1.swapTetromino();
                 }
@@ -105,8 +105,7 @@ public class Board extends JPanel implements ActionListener {
         } else {
             fixToGrid(p2.tetromino);
             clearLines();
-            p2.tetromino = Tetromino.random();
-            p2.tetromino.x = 7;
+            p2.getNextTretomino();
         }
 
         if ((p1Collided && collides(0, 0, p1.tetromino)) || (p2Collided && collides(0, 0, p2.tetromino))) {
@@ -361,5 +360,10 @@ public class Board extends JPanel implements ActionListener {
     private boolean isIShape(Tetromino tetromino) {
         // I-piece is typically 4x1 or 1x4
         return (tetromino.shape.length == 4 && tetromino.shape[0].length == 1) || (tetromino.shape.length == 1 && tetromino.shape[0].length == 4);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(10 * CELL_SIZE, 20 * CELL_SIZE);
     }
 }

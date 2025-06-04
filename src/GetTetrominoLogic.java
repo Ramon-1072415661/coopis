@@ -1,20 +1,19 @@
 public class GetTetrominoLogic {
-    private int initialXPosition;
-//    private TetrominoQueue queue;
+    private TetrominoQueue queue;
 
 
-    public GetTetrominoLogic(int initialXPosition) {
-        this.initialXPosition = initialXPosition;
+    public GetTetrominoLogic(TetrominoQueue queue) {
+        this.queue = queue;
     }
 
     public Tetromino nextTetromino() {
-        return randomTetromino(); // this is a place holder. Insert Next Queue Logic
+        queue.add(randomTetromino());
+        Tetromino tetromino = queue.remove();
+        return tetromino;
     }
-
 
     private Tetromino randomTetromino() {
         Tetromino tetromino = Tetromino.random();
-        tetromino.x = initialXPosition;
         return tetromino;
     }
 }
