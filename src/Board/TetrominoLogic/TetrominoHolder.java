@@ -11,7 +11,7 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
     private static final int HOLDER_LIMIT = 2;
     private final ArrayList<PanelObserver> observers = new  ArrayList<>();
     private boolean swaped = false;
-    private  Stack<Tetromino> stack;
+    private Stack<Tetromino> stack;
 
     public TetrominoHolder() {
         this(new Stack<>());
@@ -21,32 +21,30 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
 
     }
 
-
-    public Tetromino swap(Tetromino actual) {
-        if(swaped){
-            return actual;
-        }
-        try {
-            Tetromino peek_tetromino = this.pop();
-            TetrominoResources resources = TetrominoResources.getInstance();
-            Tetromino tetrominoToAdd = resources.createDefaultCopyOf(actual);
-            stack.add(tetrominoToAdd);
-            swaped = true;
-            notifyObservers();
-            return peek_tetromino;
-        } catch (NullPointerException e){
-            return actual;
-        }
-    }
     public boolean isOnLimit(){
         return stack.size() == HOLDER_LIMIT;
     }
-    public void insert(Tetromino actual) {
+    public Tetromino swap(Tetromino actual) {
+        if (!isOnLimit()) {
+            return actual;
+        }
+        Tetromino peek_tetromino = this.pop();
         TetrominoResources resources = TetrominoResources.getInstance();
-        Tetromino tetrominoToInsert = resources.createDefaultCopyOf(actual);
-        stack.add(tetrominoToInsert);
+        Tetromino tetrominoToAdd = resources.createDefaultCopyOf(actual);
+        stack.add(tetrominoToAdd);
+        swaped = true;
         notifyObservers();
+        return peek_tetromino;
+    }
 
+    public boolean insert(Tetromino actual) {
+        if (stack.isEmpty() || stack.size() == 1) {
+            stack.add(actual);
+            notifyObservers();
+            return false;
+        }
+
+        return true;
     }
     public Tetromino pop(){
         return stack.pop();

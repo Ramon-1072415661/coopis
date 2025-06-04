@@ -14,8 +14,7 @@ import java.util.Map;
         keyMap.put(KeyEvent.VK_LEFT, new MoveLeftCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_RIGHT, new MoveRightCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_UP, new RotateCommand(columnStart,columnEnd));
-        keyMap.put(KeyEvent.VK_M, new SwapCommand(initialPosition));
-        keyMap.put(KeyEvent.VK_N, new InsertCommand());
+        keyMap.put(KeyEvent.VK_N, new InsertCommand(initialPosition));
         keyMap.put(KeyEvent.VK_DOWN, new DropCommand());
     }
     public void handleKey(Grid grid, int keyCode, Player player){

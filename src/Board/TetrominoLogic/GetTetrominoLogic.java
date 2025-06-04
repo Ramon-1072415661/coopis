@@ -1,22 +1,23 @@
 package Board.TetrominoLogic;
 
 public class GetTetrominoLogic {
-    private int initialXPosition;
-//    private TetrominoQueue queue;
-
-
-    public GetTetrominoLogic(int initialXPosition) {
-        this.initialXPosition = initialXPosition;
+    private TetrominoQueue queue;
+    private int initialPosition;
+    public GetTetrominoLogic(TetrominoQueue queue, int initialPosition) {
+        this.queue = queue;
+        this.initialPosition = initialPosition;
     }
 
     public Tetromino nextTetromino() {
-        return randomTetromino(); // this is a place holder. Insert Next Queue Logic
+        queue.add(randomTetromino());
+        Tetromino tetromino = queue.remove();
+        tetromino.x = initialPosition;
+        tetromino.y = 0;
+        return tetromino;
     }
-
 
     private Tetromino randomTetromino() {
         Tetromino tetromino = Tetromino.random();
-        tetromino.x = initialXPosition;
         return tetromino;
     }
 }

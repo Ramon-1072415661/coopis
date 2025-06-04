@@ -14,8 +14,7 @@ import java.util.Map;
         keyMap.put(KeyEvent.VK_A, new MoveLeftCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_D, new MoveRightCommand(columnStart,columnEnd));
         keyMap.put(KeyEvent.VK_W, new RotateCommand(columnStart,columnEnd));
-        keyMap.put(KeyEvent.VK_E, new SwapCommand(initialPosition));
-        keyMap.put(KeyEvent.VK_Q, new InsertCommand());
+        keyMap.put(KeyEvent.VK_Q, new InsertCommand(initialPosition));
         keyMap.put(KeyEvent.VK_S, new DropCommand());
         keyMap.put(KeyEvent.VK_R, new InverseHoldCommand());
     }

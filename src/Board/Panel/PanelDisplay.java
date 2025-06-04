@@ -6,12 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelDisplay extends JPanel {
-    public PanelDisplay(Player player) {
+    public PanelDisplay(JPanel panel) {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        HolderPanel holder = new HolderPanel(player);
-        Dimension holder_size = holder.getPreferredSize();
-        holder.setMaximumSize(holder_size);
-        holder.setMaximumSize(holder_size);
-        add(holder);
+        setOpaque(false);
+        add(panel);
+
     }
 }

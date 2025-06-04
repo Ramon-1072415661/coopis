@@ -24,15 +24,14 @@ public class Board extends JPanel implements ActionListener {
     private boolean gameOver = false;
 
     private void startGame() {
-//        p1 = new Player(2,0,COLS/2);
-        p2 = new Player(7,COLS/2,COLS, Controls.ARROWS);
         grid = new Grid(COLS,ROWS);
         gameOver = false;
         timer.start();
     }
 
-    public Board(Player player) {
+    public Board(Player player,Player player2) {
         p1 = player;
+        p2 = player2;
         setFocusable(true);
         startGame();
 
@@ -185,5 +184,8 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }
-
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(10 * CELL_SIZE, 20 * CELL_SIZE);
+    }
 }
