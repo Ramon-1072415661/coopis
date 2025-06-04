@@ -63,11 +63,11 @@ public class Board extends JPanel implements ActionListener {
                     move(1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_S) {
                     drop(p1.tetromino);
+
                 } else if (keyCode == KeyEvent.VK_W) {
                     rotate(p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_Q){ //insert
                       p1.insertInHold();
-
                 } else if (keyCode == KeyEvent.VK_E){ //swap
                     p1.swapTetromino();
                 }
@@ -360,5 +360,10 @@ public class Board extends JPanel implements ActionListener {
     private boolean isIShape(Tetromino tetromino) {
         // I-piece is typically 4x1 or 1x4
         return (tetromino.shape.length == 4 && tetromino.shape[0].length == 1) || (tetromino.shape.length == 1 && tetromino.shape[0].length == 4);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(10 * CELL_SIZE, 20 * CELL_SIZE);
     }
 }

@@ -5,26 +5,37 @@ public class Player {
     private TetrominoHolder holder;
     private GetTetrominoLogic next_tetromino_logic;
     private TetrominoQueue queue;
+    private int initialPosition;
 
-    public Player(int initialPosition) {
-        holder = new TetrominoHolder();
-        queue = new TetrominoQueue(initialPosition);
-        next_tetromino_logic = new GetTetrominoLogic(initialPosition,queue);
+    public Player(int initialPosition, TetrominoQueue queue, TetrominoHolder holder) {
+        this.holder = holder;
+        this.queue = queue;
+        this.initialPosition = initialPosition;
+        next_tetromino_logic = new GetTetrominoLogic(queue);
         this.getNextTretomino();
     }
 
     public void getNextTretomino(){
         tetromino = next_tetromino_logic.nextTetromino();
+        tetromino.x = initialPosition;
+        tetromino.y = 0;
         holder.resetSwap();
     }
 
     public void swapTetromino(){
-        tetromino = holder.swap(tetromino);
+         holder.invert();
     }
 
     public void insertInHold(){
-        holder.insert(tetromino);
-        this.getNextTretomino();
+        boolean isSwap = holder.insert(tetromino);
+        if (isSwap) {
+            tetromino = holder.swap(tetromino);
+            tetromino.x = initialPosition;
+            tetromino.y = 0;
+        }
+        else {
+            this.getNextTretomino();
+        }
     }
 
     public TetrominoHolder getHolder() {

@@ -4,8 +4,8 @@ import java.awt.*;
 public class NextPanel extends JPanel {
     private TetrominoPanel<TetrominoQueue> panel;
     private static final int CELL_SIZE = 30,PADDING = 80, SHADOW = CELL_SIZE/6;
-    public NextPanel(Player player) {
-        panel = new TetrominoPanel<>(player.getQueue(),CELL_SIZE,PADDING,SHADOW);
+    public NextPanel(TetrominoQueue queue) {
+        panel = new TetrominoPanel<>(queue,CELL_SIZE,PADDING,SHADOW);
         setBackground(new Color(30, 30, 30));
         setOpaque(true);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS)); // ou outro layout
@@ -21,6 +21,8 @@ public class NextPanel extends JPanel {
 
         panel.setPreferredSize(getTetrominoPanelPreferedSize());
         add(panel);
+        setMaximumSize(getPreferredSize());
+        setMinimumSize(getPreferredSize());
     }
 
 
