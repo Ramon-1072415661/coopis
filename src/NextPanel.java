@@ -6,8 +6,7 @@ public class NextPanel extends JPanel {
     private static final int CELL_SIZE = 30,PADDING = 80, SHADOW = CELL_SIZE/6;
     public NextPanel(TetrominoQueue queue) {
         panel = new TetrominoPanel<>(queue,CELL_SIZE,PADDING,SHADOW);
-        setBackground(new Color(30, 30, 30));
-        setOpaque(true);
+        setOpaque(false);
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS)); // ou outro layout
 
         JLabel tittle = new JLabel();
@@ -23,6 +22,20 @@ public class NextPanel extends JPanel {
         add(panel);
         setMaximumSize(getPreferredSize());
         setMinimumSize(getPreferredSize());
+    }
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        // Suaviza a borda
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Cor de fundo
+        g2.setColor(new Color(0x21222c));
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
+        g2.dispose();
     }
 
 
