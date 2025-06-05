@@ -1,6 +1,4 @@
-package Board.Timer;
-
-import java.time.Duration;
+package Timer;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

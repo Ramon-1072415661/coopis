@@ -3,14 +3,14 @@ import CellRenders.CellRenderer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-
+import Timer.SingletonTimer;
 public class Board extends JPanel implements ActionListener {
     private static final int ROWS = 20, COLS = 10, CELL_SIZE = 48, CELL_SHADOW_BEVEL = CELL_SIZE / 5;
     private static int DELAY = 400;
 
     private Color[][] grid = new Color[ROWS][COLS];
     private final Timer timer = new Timer(DELAY, this);
-
+    private final SingletonTimer timeRegister = new SingletonTimer();
     ScoreSingleton score = ScoreSingleton.getInstance();
     private Player p1;
     private Player p2;
@@ -24,6 +24,7 @@ public class Board extends JPanel implements ActionListener {
         grid = new Color[ROWS][COLS];
         gameOver = false;
         timer.start();
+        timeRegister.start();
     }
 
     public Board(Player player1, Player player2) {
@@ -128,6 +129,7 @@ public class Board extends JPanel implements ActionListener {
             paintCurrentShapeCells(g, p2.tetromino);
         } else {
             paintGameOverOverlay(g);
+            timeRegister.stopMatchRegister(score.calculeScore());
         }
     }
 

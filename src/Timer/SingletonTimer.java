@@ -1,5 +1,4 @@
-package Board.Timer;
-
+package Timer;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;

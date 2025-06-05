@@ -1,6 +1,6 @@
-package Board.Timer;
+package Timer;
 
 public interface TimeScoreObservable {
     void addTimeObservers(TimeScoreObservers observers);
-    void notifyObservers(TimeRegister register,int score);
+    void notifyObservers(TimeRegister register, int score);
 }

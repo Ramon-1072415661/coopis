@@ -1,4 +1,4 @@
-package Board.Timer;
+package Timer;
 import javax.swing.*;
 import java.awt.*;
 
@@ -94,4 +94,5 @@ public class PanelTimer extends JPanel implements TimeScoreObservers {
     public Dimension getPreferredSize() {
         return new Dimension(500,300);
     }
+
 }
