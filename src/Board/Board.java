@@ -4,6 +4,8 @@ import Board.CellRenders.CellRenderer;
 import Board.Controls.Controls;
 import Board.Controls.Grid;
 import Board.TetrominoLogic.Tetromino;
+import Board.Timer.SingletonTimer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,8 +17,10 @@ public class Board extends JPanel implements ActionListener {
     private Grid grid;
 //    private Color[][] grid = new Color[ROWS][COLS];
     private final Timer timer = new Timer(DELAY, this);
+    private final SingletonTimer timerRegister = SingletonTimer.getInstance();
     private Player p1;
     private Player p2;
+
 
 
     private final CellRenderer cellRenderer = new CellRenderer(CELL_SIZE, CELL_SHADOW_BEVEL);
@@ -27,6 +31,7 @@ public class Board extends JPanel implements ActionListener {
         grid = new Grid(COLS,ROWS);
         gameOver = false;
         timer.start();
+        timerRegister.start();
     }
 
     public Board(Player player,Player player2) {
@@ -92,6 +97,7 @@ public class Board extends JPanel implements ActionListener {
         if ((p1Collided && grid.collides(0, 0, p1.tetromino)) || (p2Collided && grid.collides(0, 0, p2.tetromino))) {
             gameOver = true;
             timer.stop();
+            timerRegister.stopMatchRegister(6000);
         }
 
         repaint();

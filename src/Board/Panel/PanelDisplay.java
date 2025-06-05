@@ -6,10 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PanelDisplay extends JPanel {
-    public PanelDisplay(JPanel panel) {
+    public PanelDisplay(JPanel ...panels) {
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setOpaque(false);
-        add(panel);
+        for (JPanel panel : panels){
+            panel.setAlignmentX(LEFT_ALIGNMENT);
+            add(panel);
+
+        }
 
     }
 }
