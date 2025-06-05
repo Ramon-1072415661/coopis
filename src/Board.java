@@ -10,7 +10,7 @@ public class Board extends JPanel implements ActionListener {
 
     private Color[][] grid = new Color[ROWS][COLS];
     private final Timer timer = new Timer(DELAY, this);
-    private final SingletonTimer timeRegister = new SingletonTimer();
+    private final SingletonTimer timeRegister = SingletonTimer.getInstance();
     ScoreSingleton score = ScoreSingleton.getInstance();
     private Player p1;
     private Player p2;
@@ -130,7 +130,7 @@ public class Board extends JPanel implements ActionListener {
             paintCurrentShapeCells(g, p2.tetromino);
         } else {
             paintGameOverOverlay(g);
-            timeRegister.stopMatchRegister(score.calculeScore());
+            timeRegister.stopPlacardRegister(score.calculeScore());
         }
     }
 

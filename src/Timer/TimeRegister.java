@@ -1,10 +1,11 @@
 package Timer;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-  public class TimeRegister {
+ class TimeRegister {
     private Instant startInstant;
     private Instant finalInstant;
 
@@ -19,7 +20,16 @@ import java.time.format.DateTimeFormatter;
     public String finalTime(){
         return formatTime(finalInstant);
     }
-    private String formatTime(Instant instante) {
+    public String beetweenTime(){
+        Duration duration = Duration.between(startInstant,finalInstant);
+        long millis = duration.toMillis();
+        long minutos = millis / 60000;
+        long segundos = (millis % 60000) / 1000;
+        long milissegundos = millis % 1000;
+
+        return String.format("%02d:%02d.%03d", minutos, segundos, milissegundos);
+    }
+    public static String formatTime(Instant instante) {
         // Define o fuso horário desejado
         ZoneId zoneId = ZoneId.systemDefault(); // ou ZoneId.of("America/Sao_Paulo")
 

@@ -2,13 +2,13 @@ package Timer;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelTimer extends JPanel implements TimeScoreObservers {
+public class PlacardPainel extends JPanel implements TimeScoreObservers {
     private JPanel columnStartTime;
     private JPanel columnFinalTime;
     private JPanel columnScore;
     private SingletonTimer timer = SingletonTimer.getInstance();
 
-    public PanelTimer() {
+    public PlacardPainel() {
         timer.addTimeObservers(this);
         setOpaque(false);
         setLayout(new FlowLayout(FlowLayout.CENTER,50,20));
