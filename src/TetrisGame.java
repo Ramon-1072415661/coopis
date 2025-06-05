@@ -1,6 +1,5 @@
 import javax.swing.*;
-
-import javax.swing.*;
+import Timer.PanelTimer;
 import java.awt.*;
 
 public class TetrisGame {
@@ -21,22 +20,27 @@ public class TetrisGame {
         HolderPanel holder = new HolderPanel(universalHold);
         PanelDisplay Hpanel = new PanelDisplay(holder);
         Hpanel.setPreferredSize( new Dimension(holder.getPreferredSize().width,board.getPreferredSize().height));
+
         NextPanel next = new NextPanel(universalNext);
-        PanelDisplay Npanel = new PanelDisplay(next);
-        Npanel.setPreferredSize( new Dimension(next.getPreferredSize().width,board.getPreferredSize().height));
+        PanelTimer panelTimer = new PanelTimer();
+        RigthPanel RightPanel = new RigthPanel(next,panelTimer);
+        RightPanel.setPreferredSize( new Dimension(panelTimer.getPreferredSize().width,board.getPreferredSize().height));
+
+        frame.add(Box.createHorizontalStrut(250));
         GridBagConstraints contraint = new GridBagConstraints();
-        contraint.gridx = 0;
+        contraint.gridx = 1;
         contraint.gridy = 0;
         contraint.insets = new Insets(0,0,0,0);
         frame.add(Hpanel,contraint);
 
-        contraint.gridx = 1;
+        contraint.gridx = 2;
         contraint.insets = new Insets(0,20,0,20);
         frame.add(board, contraint);
 
-        contraint.gridx = 2;
+        contraint.gridx = 3;
         contraint.insets = new Insets(0,0,0,0);
-        frame.add(Npanel,contraint);
+        frame.add(RightPanel,contraint);
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
