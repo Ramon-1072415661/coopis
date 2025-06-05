@@ -1,5 +1,6 @@
 import javax.swing.*;
-import Timer.PanelTimer;
+import Timer.PlacardPainel;
+import Timer.TimerPanel;
 import java.awt.*;
 
 public class TetrisGame {
@@ -18,11 +19,11 @@ public class TetrisGame {
         Board board = new Board(p1,p2);
 
         HolderPanel holder = new HolderPanel(universalHold);
-        PanelDisplay Hpanel = new PanelDisplay(holder);
-        Hpanel.setPreferredSize( new Dimension(holder.getPreferredSize().width,board.getPreferredSize().height));
+        LeftPanel leftPanel = new LeftPanel(holder, new TimerPanel());
+        leftPanel.setPreferredSize( new Dimension(holder.getPreferredSize().width,board.getPreferredSize().height));
 
         NextPanel next = new NextPanel(universalNext);
-        PanelTimer panelTimer = new PanelTimer();
+        PlacardPainel panelTimer = new PlacardPainel();
         RigthPanel RightPanel = new RigthPanel(next,panelTimer);
         RightPanel.setPreferredSize( new Dimension(panelTimer.getPreferredSize().width,board.getPreferredSize().height));
 
@@ -31,7 +32,7 @@ public class TetrisGame {
         contraint.gridx = 1;
         contraint.gridy = 0;
         contraint.insets = new Insets(0,0,0,0);
-        frame.add(Hpanel,contraint);
+        frame.add(leftPanel,contraint);
 
         contraint.gridx = 2;
         contraint.insets = new Insets(0,20,0,20);
