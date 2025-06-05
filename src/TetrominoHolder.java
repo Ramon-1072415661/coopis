@@ -39,7 +39,7 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
         return true;
     }
 
-    public Tetromino pop() {
+    private Tetromino pop() {
         return stack.pop();
     }
 
@@ -59,6 +59,11 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
         return stack.get_list().isEmpty();
     }
 
+    public void reset(){
+        stack = new Stack<>();
+        resetSwap();
+        notifyObservers();
+    }
     @Override
     public Iterator<Tetromino> iterator() {
         return stack.iterator();

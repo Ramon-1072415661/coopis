@@ -37,12 +37,9 @@ public class Player {
             this.getNextTretomino();
         }
     }
-
-    public TetrominoHolder getHolder() {
-        return holder;
-    }
-
-    public TetrominoQueue getQueue() {
-        return queue;
+    public void reset(){
+        queue.reset();
+        holder.reset();
+        this.getNextTretomino();
     }
 }

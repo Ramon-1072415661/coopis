@@ -21,6 +21,8 @@ public class Board extends JPanel implements ActionListener {
     private boolean gameOver = false;
 
     private void startGame() {
+        p1.reset();
+        p2.reset();
         grid = new Color[ROWS][COLS];
         gameOver = false;
         timer.start();

@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatter;
 
         return String.format("%02d:%02d.%03d", minutos, segundos, milissegundos);
     }
-    public static String formatTime(Instant instante) {
+     String formatTime(Instant instante) {
         // Define o fuso horário desejado
         ZoneId zoneId = ZoneId.systemDefault(); // ou ZoneId.of("America/Sao_Paulo")
 
