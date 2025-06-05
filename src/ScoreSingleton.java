@@ -24,7 +24,6 @@ public final class ScoreSingleton {
     public int calculeScore() {
         int scorePerRowsCleaned = 100;
         totalScoreCurrentGame = scorePerRowsCleaned * rowsCleaned;
-        resetCleanedRows();
         addCurrentScoreGameToList(totalScoreCurrentGame);
 
         return totalScoreCurrentGame;
@@ -34,7 +33,7 @@ public final class ScoreSingleton {
         scoreGames.add(totalScoreCurrentGame);
     }
 
-    private void resetCleanedRows() {
+    public void reset() {
         rowsCleaned = 0;
     }
 }

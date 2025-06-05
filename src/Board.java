@@ -25,6 +25,7 @@ public class Board extends JPanel implements ActionListener {
         gameOver = false;
         timer.start();
         timeRegister.start();
+        score.reset();
     }
 
     public Board(Player player1, Player player2) {
