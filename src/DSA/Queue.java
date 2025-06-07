@@ -1,6 +1,6 @@
 package DSA;
 
-public class Queue <T> {
+public class Queue<T> {
 
     private Node<T> first;
     private Node<T> last;
@@ -17,6 +17,7 @@ public class Queue <T> {
     public void add(T new_data) {
         add(new Node<>(new_data));
     }
+
     private void add(Node<T> new_node) {
         if (isEmpty()) {
             first = last = new_node;
@@ -24,7 +25,7 @@ public class Queue <T> {
             last.next = new_node;
             last = new_node;
         }
-        size ++;
+        size++;
     }
 
     public T poll() {
@@ -35,7 +36,7 @@ public class Queue <T> {
         if (isEmpty()) throw new NullPointerException("Queue is empty.");
         Node<T> old_first = first;
         first = first.next;
-        size --;
+        size--;
         return old_first.data;
     }
 

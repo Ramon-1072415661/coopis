@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
     private final ArrayList<PanelObserver> observers = new ArrayList<>();
-    private boolean swaped = false;
+    private boolean swapped = false;
     private Stack<Tetromino> stack;
 
     public TetrominoHolder() {
@@ -14,17 +14,15 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
 
     public TetrominoHolder(Stack<Tetromino> stack) {
         this.stack = stack;
-
     }
 
-
     public Tetromino swap(Tetromino actual) {
-        if (swaped || stack.isEmpty()) {
+        if (swapped || stack.isEmpty()) {
             return actual;
         }
         Tetromino peek_tetromino = this.pop();
         stack.add(actual);
-        swaped = true;
+        swapped = true;
         notifyObservers();
         return peek_tetromino;
     }
@@ -52,18 +50,19 @@ public class TetrominoHolder implements Iterable<Tetromino>, PanelObservable {
     }
 
     public void resetSwap() {
-        swaped = false;
+        swapped = false;
     }
 
     public boolean isEmpty() {
         return stack.get_list().isEmpty();
     }
 
-    public void reset(){
+    public void reset() {
         stack = new Stack<>();
         resetSwap();
         notifyObservers();
     }
+
     @Override
     public Iterator<Tetromino> iterator() {
         return stack.iterator();

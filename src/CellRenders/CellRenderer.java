@@ -1,11 +1,10 @@
 package CellRenders;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
-public class CellRenderer  extends Render{
+public class CellRenderer extends Render {
     public CellRenderer(int cellSize, int shadowBevel) {
-        super(cellSize,shadowBevel);
+        super(cellSize, shadowBevel);
     }
 
     @Override
@@ -13,7 +12,6 @@ public class CellRenderer  extends Render{
         // Use cellSize to calculate the x and y positions from the grid position
         int x = gridX * cellSize;
         int y = gridY * cellSize;
-        super.drawCell(g,x,y, color);
+        super.drawCell(g, x, y, color);
     }
-
 }

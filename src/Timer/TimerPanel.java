@@ -4,14 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TimerPanel extends JPanel implements ActualTimeObserver {
-    private final SingletonTimer timer = SingletonTimer.getInstance();
     private final JLabel timerLabel;
+
     public TimerPanel() {
+        SingletonTimer timer = SingletonTimer.getInstance();
         timer.addTimeMacthObserver(this);
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
-        Font tittleFont = new Font("Arial",Font.BOLD,25);
-        Font timeFont = new Font("Arial", Font.BOLD,32);
+        Font tittleFont = new Font("Arial", Font.BOLD, 25);
+        Font timeFont = new Font("Arial", Font.BOLD, 32);
         JLabel tittleLabel = new JLabel("Time");
         tittleLabel.setFont(tittleFont);
         tittleLabel.setForeground(Color.WHITE);
@@ -24,6 +25,7 @@ public class TimerPanel extends JPanel implements ActualTimeObserver {
         add(timerLabel);
 
     }
+
     @Override
     public void updateOnTimeChange(String actualTime) {
         timerLabel.setText(actualTime);

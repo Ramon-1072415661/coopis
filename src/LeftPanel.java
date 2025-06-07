@@ -1,8 +1,10 @@
-import javax.swing.*;
 import Timer.TimerPanel;
+
+import javax.swing.*;
+
 public class LeftPanel extends JPanel {
     public LeftPanel(HolderPanel hold, TimerPanel timer) {
-        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setOpaque(false);
         hold.setAlignmentX(RIGHT_ALIGNMENT);
         timer.setAlignmentX(RIGHT_ALIGNMENT);

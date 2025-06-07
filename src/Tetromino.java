@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Random;
 
 public class Tetromino {
     public int[][] shape;
@@ -20,6 +19,7 @@ public class Tetromino {
 
     /**
      * Rotates the tetromino 90 degrees clockwise around its center.
+     *
      * @return A new rotated shape matrix
      */
     public int[][] rotate() {
@@ -32,9 +32,7 @@ public class Tetromino {
 
         // Determine the dimensions of the rotated matrix
         // For standard rotation, this is just swapping rows and cols
-        int newRows = cols;
-        int newCols = rows;
-        int[][] rotated = new int[newRows][newCols];
+        int[][] rotated = new int[cols][rows];
 
         // For each cell in the original matrix
         for (int row = 0; row < rows; row++) {
@@ -45,15 +43,13 @@ public class Tetromino {
 
                 // Apply rotation transform (90 degrees clockwise)
                 // x' = y, y' = -x
-                float newRelCol = relRow;
-                float newRelRow = -relCol;
 
                 // Convert back to array indices (round to nearest integer)
-                int newRow = Math.round(newRelRow + centerCol);
-                int newCol = Math.round(newRelCol + centerRow);
+                int newRow = Math.round(-relCol + centerCol);
+                int newCol = Math.round(relRow + centerRow);
 
                 // Copy the value if it's within bounds
-                if (newRow >= 0 && newRow < newRows && newCol >= 0 && newCol < newCols) {
+                if (newRow >= 0 && newRow < cols && newCol >= 0 && newCol < rows) {
                     rotated[newRow][newCol] = shape[row][col];
                 }
             }
@@ -97,9 +93,7 @@ public class Tetromino {
         int[][] normalized = new int[newRows][newCols];
 
         for (int row = 0; row < newRows; row++) {
-            for (int col = 0; col < newCols; col++) {
-                normalized[row][col] = matrix[row + minRow][col + minCol];
-            }
+            System.arraycopy(matrix[row + minRow], minCol, normalized[row], 0, newCols);
         }
 
         return normalized;

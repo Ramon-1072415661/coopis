@@ -1,8 +1,9 @@
 package DSA;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class StackIterator <T> implements Iterator<T> {
+public class StackIterator<T> implements Iterator<T> {
     private Node<T> current;
 
     StackIterator(Node<T> top) {

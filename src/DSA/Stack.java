@@ -3,7 +3,7 @@ package DSA;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Stack <T> implements Iterable<T> {
+public class Stack<T> implements Iterable<T> {
     private Node<T> bottom;
     private Node<T> top;
     private int size = 0;
@@ -13,15 +13,16 @@ public class Stack <T> implements Iterable<T> {
         this.top = null;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public void add(T new_data){
+    public void add(T new_data) {
         this.add(new Node<>(new_data));
     }
-    private void add(Node<T> new_node){
-        if(isEmpty()) {
+
+    private void add(Node<T> new_node) {
+        if (isEmpty()) {
             bottom = top = new_node;
             size++;
             return;
@@ -31,10 +32,12 @@ public class Stack <T> implements Iterable<T> {
         top = new_node;
         size++;
     }
-    public T peek(){
+
+    public T peek() {
         return top.data;
     }
-    public T pop(){
+
+    public T pop() {
         if (isEmpty()) throw new NullPointerException();
         if (top == bottom) {
             size--;
@@ -49,6 +52,7 @@ public class Stack <T> implements Iterable<T> {
         size--;
         return old_last.data;
     }
+
     public ArrayList<T> get_list() {
         ArrayList<T> list = new ArrayList<>();
         Node<T> actual = bottom;
@@ -60,7 +64,8 @@ public class Stack <T> implements Iterable<T> {
 
         return list;
     }
-    public int size(){
+
+    public int size() {
         return size;
     }
 

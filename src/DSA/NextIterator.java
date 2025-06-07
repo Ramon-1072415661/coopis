@@ -3,8 +3,8 @@ package DSA;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class NextIterator <T> implements Iterator<T> {
-    private  Node<T> current;
+public class NextIterator<T> implements Iterator<T> {
+    private Node<T> current;
 
     public NextIterator(Node<T> current) {
         this.current = current;
