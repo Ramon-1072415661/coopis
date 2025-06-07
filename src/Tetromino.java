@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.util.Random;
 
-class Tetromino {
+public class Tetromino {
     public int[][] shape;
     public int x = 0, y = 0;
     public Color color;

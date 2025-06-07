@@ -1,21 +1,18 @@
-import java.awt.Color;
-import java.awt.Graphics;
+package CellRenders;
 
-public class CellRenderer {
+import java.awt.*;
+
+public class Render {
     private static final double LIGHT_MULTIPLIER = 1.3, DARK_MULTIPLIER = 0.7;
-
-    private final int cellSize;
+    final int cellSize;
     private final int shadowBevel;
 
-    public CellRenderer(int cellSize, int shadowBevel) {
+    public Render(int cellSize, int shadowBevel) {
         this.cellSize = cellSize;
         this.shadowBevel = shadowBevel;
     }
 
-    public void drawCell(Graphics g, int gridX, int gridY, Color color) {
-        int x = gridX * cellSize;
-        int y = gridY * cellSize;
-
+    public void drawCell(Graphics g, int x, int y, Color color) {
         drawCellFace(g, x, y, color);
         drawTopEdge(g, x, y, color);
         drawLeftEdge(g, x, y, color);
@@ -24,12 +21,12 @@ public class CellRenderer {
         drawCellOutline(g, x, y);
     }
 
-    private void drawCellFace(Graphics g, int x, int y, Color color) {
+    void drawCellFace(Graphics g, int x, int y, Color color) {
         g.setColor(color);
         g.fillRect(x, y, cellSize, cellSize);
     }
 
-    private void drawTopEdge(Graphics g, int x, int y, Color color) {
+     void drawTopEdge(Graphics g, int x, int y, Color color) {
         Color lightShade = brighter(color);
         g.setColor(lightShade);
 
