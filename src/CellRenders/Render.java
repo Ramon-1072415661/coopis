@@ -26,7 +26,7 @@ public class Render {
         g.fillRect(x, y, cellSize, cellSize);
     }
 
-     void drawTopEdge(Graphics g, int x, int y, Color color) {
+    void drawTopEdge(Graphics g, int x, int y, Color color) {
         Color lightShade = brighter(color);
         g.setColor(lightShade);
 

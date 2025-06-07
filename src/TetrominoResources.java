@@ -31,10 +31,6 @@ public final class TetrominoResources {
         rand = new Random();
     }
 
-    private static class Holder {
-        private static final TetrominoResources INSTANCE = new TetrominoResources();
-    }
-
     public static TetrominoResources getInstance() {
         return Holder.INSTANCE;
     }
@@ -49,5 +45,9 @@ public final class TetrominoResources {
 
     public Random getRandom() {
         return rand;
+    }
+
+    private static class Holder {
+        private static final TetrominoResources INSTANCE = new TetrominoResources();
     }
 }

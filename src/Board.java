@@ -1,34 +1,21 @@
 import CellRenders.CellRenderer;
+import Timer.SingletonTimer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import Timer.SingletonTimer;
+
 public class Board extends JPanel implements ActionListener {
     private static final int ROWS = 20, COLS = 10, CELL_SIZE = 48, CELL_SHADOW_BEVEL = CELL_SIZE / 5;
-    private static int DELAY = 400;
-
-    private Color[][] grid = new Color[ROWS][COLS];
+    private static final int DELAY = 400;
     private final Timer timer = new Timer(DELAY, this);
     private final SingletonTimer timeRegister = SingletonTimer.getInstance();
-    ScoreSingleton score = ScoreSingleton.getInstance();
-    private Player p1;
-    private Player p2;
-
-
     private final CellRenderer cellRenderer = new CellRenderer(CELL_SIZE, CELL_SHADOW_BEVEL);
-
+    ScoreSingleton score = ScoreSingleton.getInstance();
+    private Color[][] grid = new Color[ROWS][COLS];
+    private final Player p1;
+    private final Player p2;
     private boolean gameOver = false;
-
-    private void startGame() {
-        p1.reset();
-        p2.reset();
-        grid = new Color[ROWS][COLS];
-        gameOver = false;
-        timer.start();
-        timeRegister.start();
-        score.reset();
-    }
 
     public Board(Player player1, Player player2) {
         p1 = player1;
@@ -72,9 +59,9 @@ public class Board extends JPanel implements ActionListener {
 
                 } else if (keyCode == KeyEvent.VK_W) {
                     rotate(p1.tetromino);
-                } else if (keyCode == KeyEvent.VK_Q){ //insert
-                      p1.insertInHold();
-                } else if (keyCode == KeyEvent.VK_E){ //swap
+                } else if (keyCode == KeyEvent.VK_Q) { //insert
+                    p1.insertInHold();
+                } else if (keyCode == KeyEvent.VK_E) { //swap
                     p1.swapTetromino();
                 }
 
@@ -92,6 +79,16 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
         });
+    }
+
+    private void startGame() {
+        p1.reset();
+        p2.reset();
+        grid = new Color[ROWS][COLS];
+        gameOver = false;
+        timer.start();
+        timeRegister.start();
+        score.reset();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -154,11 +151,9 @@ public class Board extends JPanel implements ActionListener {
         // Retry message
         g2d.setFont(new Font("Arial", Font.PLAIN, 20));
         String retryText = "Press SPACE or click to retry";
-        textWidth = fontMetrics.stringWidth(retryText);
         FontMetrics smallerMetrics = g2d.getFontMetrics();
         textWidth = smallerMetrics.stringWidth(retryText);
         g2d.drawString(retryText, (COLS * CELL_SIZE - textWidth) / 2, ROWS * CELL_SIZE / 2 + 20);
-        score.calculeScore();
         g2d.dispose();
     }
 
@@ -362,8 +357,7 @@ public class Board extends JPanel implements ActionListener {
         };
 
         // Choose which kick data to use based on tetromino type
-        int[][][] kickData = isIShape(tetromino) ? wallKickDataI : wallKickData;
-        return kickData;
+        return isIShape(tetromino) ? wallKickDataI : wallKickData;
     }
 
     // Helper method to determine if this is an I-piece

@@ -10,7 +10,7 @@ public class TetrominoQueue implements Iterable<Tetromino>, PanelObservable {
     private Queue<Tetromino> queue = new Queue<>();
 
     public TetrominoQueue() {
-        for (int i = 0; i < TETROMINO_QUANTITY; i++){
+        for (int i = 0; i < TETROMINO_QUANTITY; i++) {
             Tetromino tetromino = Tetromino.random();
             queue.add(tetromino);
         }
@@ -25,9 +25,10 @@ public class TetrominoQueue implements Iterable<Tetromino>, PanelObservable {
         notifyObservers();
         return queue.remove();
     }
-    public void reset(){
+
+    public void reset() {
         queue = new Queue<>();
-        for (int i = 0; i < TETROMINO_QUANTITY; i++){
+        for (int i = 0; i < TETROMINO_QUANTITY; i++) {
             Tetromino tetromino = Tetromino.random();
             queue.add(tetromino);
         }
@@ -41,7 +42,7 @@ public class TetrominoQueue implements Iterable<Tetromino>, PanelObservable {
 
     @Override
     public void notifyObservers() {
-        for( PanelObserver observer : observers) {
+        for (PanelObserver observer : observers) {
             observer.update();
         }
     }
