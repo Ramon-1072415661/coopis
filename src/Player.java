@@ -1,15 +1,20 @@
+import tetromino.Tetromino;
+import tetromino.TetrominoHolder;
+import tetromino.TetrominoQueue;
+import utils.TetrominoProvider;
+
 public class Player {
-    public Tetromino tetromino;
     private final TetrominoHolder holder;
-    private final GetTetrominoLogic next_tetromino_logic;
+    private final TetrominoProvider next_tetromino_logic;
     private final TetrominoQueue queue;
     private final int initialPosition;
+    public Tetromino tetromino;
 
     public Player(int initialPosition, TetrominoQueue queue, TetrominoHolder holder) {
         this.holder = holder;
         this.queue = queue;
         this.initialPosition = initialPosition;
-        next_tetromino_logic = new GetTetrominoLogic(queue);
+        next_tetromino_logic = new TetrominoProvider(queue);
         this.getNextTretomino();
     }
 

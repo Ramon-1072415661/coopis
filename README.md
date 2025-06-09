@@ -26,10 +26,10 @@ can be applied in a real-world application with visual feedback.
    ```
 2. Run the main class:
    ```
-   java TetrisGame
+   java CoopisGame
    ```
 
-Or just open it through IntelliJ IDEA Community and run the  `TetrisGame` class :)
+Or just open it through IntelliJ IDEA Community and run the  `CoopisGame` class :)
 
 ## Game Controls
 
@@ -66,7 +66,7 @@ The game implements several key data structures:
 
 - **Board Grid**: A 2D array representing the game state with color information
 - **Tetromino Class**: Represents the falling pieces with rotation states
-- **Game Loop**: Timer-based event system for game progression
+- **Game Loop**: timer-based event system for game progression
 - **Rendering System**: Custom graphics for blocks with shadow effects
 
 ## Project Structure
@@ -74,7 +74,7 @@ The game implements several key data structures:
 - `Board.java`: Main game logic and rendering
 - `Tetromino.java`: Tetromino shapes, rotations, and behaviors
 - `CellRenderer.java`: Visual representation of tetromino blocks
-- `TetrisGame.java`: Entry point and window management
+- `CoopisGame.java`: Entry point and window management
 
 ## Acknowledgments
 
