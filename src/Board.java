@@ -1,23 +1,40 @@
-import CellRenders.CellRenderer;
-import Timer.SingletonTimer;
+import cellRenders.CellRenderer;
+import managers.DisplayManager;
+import managers.ScoreManager;
+import managers.TimerManager;
+import tetromino.Tetromino;
+import utils.Colors;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class Board extends JPanel implements ActionListener {
-    private static final int ROWS = 20, COLS = 10, CELL_SIZE = 48, CELL_SHADOW_BEVEL = CELL_SIZE / 5;
+
     private static final int DELAY = 400;
-    private final Timer timer = new Timer(DELAY, this);
-    private final SingletonTimer timeRegister = SingletonTimer.getInstance();
-    private final CellRenderer cellRenderer = new CellRenderer(CELL_SIZE, CELL_SHADOW_BEVEL);
-    ScoreSingleton score = ScoreSingleton.getInstance();
-    private Color[][] grid = new Color[ROWS][COLS];
+    private final javax.swing.Timer timer = new javax.swing.Timer(DELAY, this);
+    private final TimerManager timeRegister = TimerManager.getInstance();
+    private final DisplayManager displayManager = DisplayManager.getInstance();
+    private final CellRenderer cellRenderer;
+
+    // Use DisplayManager for dimensions
+    private final int rows = DisplayManager.getBoardRows();
+    private final int cols = DisplayManager.getBoardCols();
+    private final int cellSize;
     private final Player p1;
     private final Player p2;
+
+    ScoreManager score = ScoreManager.getInstance();
+    private Color[][] grid;
     private boolean gameOver = false;
 
     public Board(Player player1, Player player2) {
+        // Initialize dimensions from DisplayManager
+        cellSize = displayManager.getCellSize();
+        int cellShadowBevel = displayManager.getCellShadowBevel();
+        cellRenderer = new CellRenderer(cellSize, cellShadowBevel);
+        grid = new Color[rows][cols];
+
         p1 = player1;
         p2 = player2;
         setFocusable(true);
@@ -56,7 +73,6 @@ public class Board extends JPanel implements ActionListener {
                     move(1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_S) {
                     drop(p1.tetromino);
-
                 } else if (keyCode == KeyEvent.VK_W) {
                     rotate(p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_Q) { //insert
@@ -84,7 +100,7 @@ public class Board extends JPanel implements ActionListener {
     private void startGame() {
         p1.reset();
         p2.reset();
-        grid = new Color[ROWS][COLS];
+        grid = new Color[rows][cols];
         gameOver = false;
         timer.start();
         timeRegister.start();
@@ -129,7 +145,7 @@ public class Board extends JPanel implements ActionListener {
             paintCurrentShapeCells(g, p2.tetromino);
         } else {
             paintGameOverOverlay(g);
-            timeRegister.stopPlacardRegister(score.calculeScore());
+            timeRegister.stopAndNotifyScore(score.calculeScore());
         }
     }
 
@@ -138,22 +154,26 @@ public class Board extends JPanel implements ActionListener {
 
         // Semi-transparent overlay
         g2d.setColor(new Color(0, 0, 0, 180));
-        g2d.fillRect(0, 0, COLS * CELL_SIZE, ROWS * CELL_SIZE);
+        g2d.fillRect(0, 0, cols * cellSize, rows * cellSize);
+
+        // Scale font size based on cell size for adaptive display
+        int baseFontSize = Math.max(24, cellSize / 2);
+        int smallFontSize = Math.max(16, cellSize / 3);
 
         // Game over message
-        g2d.setFont(new Font("Arial", Font.BOLD, 36));
+        g2d.setFont(new Font("Arial", Font.BOLD, baseFontSize));
         g2d.setColor(Color.WHITE);
         String gameOverText = "GAME OVER";
         FontMetrics fontMetrics = g2d.getFontMetrics();
         int textWidth = fontMetrics.stringWidth(gameOverText);
-        g2d.drawString(gameOverText, (COLS * CELL_SIZE - textWidth) / 2, ROWS * CELL_SIZE / 2 - 20);
+        g2d.drawString(gameOverText, (cols * cellSize - textWidth) / 2, rows * cellSize / 2 - 20);
 
         // Retry message
-        g2d.setFont(new Font("Arial", Font.PLAIN, 20));
+        g2d.setFont(new Font("Arial", Font.PLAIN, smallFontSize));
         String retryText = "Press SPACE or click to retry";
         FontMetrics smallerMetrics = g2d.getFontMetrics();
         textWidth = smallerMetrics.stringWidth(retryText);
-        g2d.drawString(retryText, (COLS * CELL_SIZE - textWidth) / 2, ROWS * CELL_SIZE / 2 + 20);
+        g2d.drawString(retryText, (cols * cellSize - textWidth) / 2, rows * cellSize / 2 + 20);
         g2d.dispose();
     }
 
@@ -168,9 +188,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void clearLines() {
-        for (int row = ROWS - 1; row >= 0; row--) {
+        for (int row = rows - 1; row >= 0; row--) {
             boolean full = true;
-            for (int col = 0; col < COLS; col++) {
+            for (int col = 0; col < cols; col++) {
                 if (grid[row][col] == null) {
                     full = false;
                     break;
@@ -180,9 +200,9 @@ public class Board extends JPanel implements ActionListener {
             if (full) {
                 int rowsCleaned = 0;
                 for (int r = row; r > 0; r--) {
-                    System.arraycopy(grid[r - 1], 0, grid[r], 0, COLS);
+                    System.arraycopy(grid[r - 1], 0, grid[r], 0, cols);
                 }
-                grid[0] = new Color[COLS];
+                grid[0] = new Color[cols];
                 row++;
                 rowsCleaned++;
                 score.addCleanedRows(rowsCleaned);
@@ -192,42 +212,52 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void paintBackground(Graphics g) {
-        int finalX = CELL_SIZE * COLS;
-        int finalY = CELL_SIZE * ROWS;
-        int strokeWidth = 4;
+        int x = cellSize * cols;
+        int y = cellSize * rows;
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g2.setColor(new Color(0x21222c));
-        g2.fillRect(0, 0, finalX, finalY);
-
-        g2.setStroke(new BasicStroke(strokeWidth));
-        g2.setColor(new Color(0xBD93F9));
-        g2.drawRect(0, 0, finalX + strokeWidth, finalY + strokeWidth);
-
+        g2.setColor(Colors.PANELS_BACKGROUND);
+        g2.fillRect(0, 0, x, y);
+        g2.drawRect(0, 0, cellSize * cols, cellSize * rows);
         g2.dispose();
     }
 
     private void paintFilledCells(Graphics g) {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                int cellX = col * CELL_SIZE;
-                int cellY = row * CELL_SIZE;
+        Graphics2D g2d = (Graphics2D) g.create();
+        int centerCol = cols / 2;
+        int dividerX = centerCol * cellSize;
 
-                g.setColor(Color.BLACK);
-                g.drawRect(cellX, cellY, CELL_SIZE, CELL_SIZE);
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                int cellX = col * cellSize;
+                int cellY = row * cellSize;
+
+                g.setColor(Colors.GREY);
+                g.drawRect(cellX, cellY, cellSize, cellSize);
 
                 if (grid[row][col] != null) {
                     cellRenderer.drawCell(g, col, row, grid[row][col]);
                 }
-
-                if ((row == ROWS - 1) && col == 5) {
-                    g.setColor(Color.GREEN);
-                    g.drawLine(cellX, 0, cellX, cellY + CELL_SIZE);
-                }
             }
         }
+
+        drawCenterDivider(g2d, dividerX);
+
+        g2d.dispose();
+    }
+
+    private void drawCenterDivider(Graphics2D g2d, int xPosition) {
+        Stroke oldStroke = g2d.getStroke();
+        Color oldColor = g2d.getColor();
+
+        g2d.setColor(Colors.PURPLE);
+        g2d.setStroke(new BasicStroke(1));
+        g2d.drawLine(xPosition, 0, xPosition, rows * cellSize);
+
+        g2d.setStroke(oldStroke);
+        g2d.setColor(oldColor);
     }
 
     private void paintCurrentShapeCells(Graphics g, Tetromino tetromino) {
@@ -247,7 +277,7 @@ public class Board extends JPanel implements ActionListener {
                     int newX = tetromino.x + col + dx;
                     int newY = tetromino.y + row + dy;
 
-                    if (newX < 0 || newX >= COLS || newY >= ROWS || (newY >= 0 && grid[newY][newX] != null))
+                    if (newX < 0 || newX >= cols || newY >= rows || (newY >= 0 && grid[newY][newX] != null))
                         return true;
                 }
             }
@@ -262,7 +292,7 @@ public class Board extends JPanel implements ActionListener {
                     int newX = tetromino.x + col + dx;
                     int newY = tetromino.y + row + dy;
 
-                    if (newX < 0 || newX >= COLS || newY >= ROWS) return false;
+                    if (newX < 0 || newX >= cols || newY >= rows) return false;
                     if (newY >= 0 && grid[newY][newX] != null) return false;
                 }
             }
@@ -273,11 +303,11 @@ public class Board extends JPanel implements ActionListener {
     private void move(int dx, Tetromino tetromino) {
         int width = tetromino.shape[0].length;
 
-        if (tetromino == p1.tetromino && (tetromino.x + dx >= 0 && tetromino.x + dx + width <= COLS / 2)) {
+        if (tetromino == p1.tetromino && (tetromino.x + dx >= 0 && tetromino.x + dx + width <= cols / 2)) {
             if (canMoveWithoutCollision(dx, 0, tetromino)) {
                 tetromino.x += dx;
             }
-        } else if (tetromino == p2.tetromino && (tetromino.x + dx >= COLS / 2 && tetromino.x + dx + width <= COLS)) {
+        } else if (tetromino == p2.tetromino && (tetromino.x + dx >= cols / 2 && tetromino.x + dx + width <= cols)) {
             if (canMoveWithoutCollision(dx, 0, tetromino)) {
                 tetromino.x += dx;
             }
@@ -289,7 +319,6 @@ public class Board extends JPanel implements ActionListener {
             tetromino.y++;
         }
     }
-
 
     private void rotate(Tetromino tetromino) {
         // Store the current rotation state
@@ -303,7 +332,6 @@ public class Board extends JPanel implements ActionListener {
         rotated.y = tetromino.y;
 
         // Define wall kick offsets according to SRS (Super Rotation System)
-        // Format: [rotation_state][test_number][x_offset, y_offset]
         int[][][] kickData = getKickData(tetromino);
 
         // Try each wall kick offset
@@ -315,27 +343,22 @@ public class Board extends JPanel implements ActionListener {
 
             if (!collides(dx, testY - rotated.y, rotated)) {
                 // Success - apply the rotation and the offset
-
-
-                if (tetromino == p1.tetromino && (rotated.x + dx >= 0 && rotated.x + dx + width <= COLS / 2)) {
+                if (tetromino == p1.tetromino && (rotated.x + dx >= 0 && rotated.x + dx + width <= cols / 2)) {
                     tetromino.shape = rotatedShape;
                     tetromino.x = testX;
                     tetromino.y = testY;
                     tetromino.setRotationState(newRotationState);
                     return;
-                } else if (tetromino == p2.tetromino && (rotated.x + dx >= COLS / 2 && rotated.x + dx + width <= COLS)) {
+                } else if (tetromino == p2.tetromino && (rotated.x + dx >= cols / 2 && rotated.x + dx + width <= cols)) {
                     tetromino.shape = rotatedShape;
                     tetromino.x = testX;
                     tetromino.y = testY;
                     tetromino.setRotationState(newRotationState);
                     return;
                 }
-
             }
         }
-
-        // If we get here, no wall kick succeeded
-        // Rotation fails and the piece remains unchanged
+        // If we get here, no wall kick succeeded - rotation fails
     }
 
     private int[][][] getKickData(Tetromino tetromino) {
@@ -356,18 +379,18 @@ public class Board extends JPanel implements ActionListener {
                 {{0, 0}, {1, 0}, {-2, 0}, {1, -2}, {-2, 1}}
         };
 
-        // Choose which kick data to use based on tetromino type
         return isIShape(tetromino) ? wallKickDataI : wallKickData;
     }
 
     // Helper method to determine if this is an I-piece
     private boolean isIShape(Tetromino tetromino) {
         // I-piece is typically 4x1 or 1x4
-        return (tetromino.shape.length == 4 && tetromino.shape[0].length == 1) || (tetromino.shape.length == 1 && tetromino.shape[0].length == 4);
+        return (tetromino.shape.length == 4 && tetromino.shape[0].length == 1) ||
+                (tetromino.shape.length == 1 && tetromino.shape[0].length == 4);
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(10 * CELL_SIZE, 20 * CELL_SIZE);
+        return displayManager.getBoardSize();
     }
 }
