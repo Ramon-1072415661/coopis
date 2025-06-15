@@ -9,7 +9,6 @@ public class LeftPanel extends JPanel {
         hold.setAlignmentX(RIGHT_ALIGNMENT);
         timer.setAlignmentX(RIGHT_ALIGNMENT);
         add(hold);
-        add(Box.createVerticalStrut(550));
         add(timer);
         repaint();
     }

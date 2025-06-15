@@ -1,6 +1,7 @@
 import tetromino.Tetromino;
 import tetromino.TetrominoHolder;
 import tetromino.TetrominoQueue;
+import tetromino.TetrominoType;
 import utils.TetrominoProvider;
 
 public class Player {
@@ -25,14 +26,15 @@ public class Player {
         holder.resetSwap();
     }
 
-    public void swapTetromino() {
+    public void swapHolder() {
         holder.invert();
     }
 
-    public void insertInHold() {
-        boolean isSwap = holder.insert(tetromino);
+    public void swapTetromino() {
+        Tetromino normalizedTetromino = new Tetromino(tetromino.type);
+        boolean isSwap = holder.insert(normalizedTetromino);
         if (isSwap) {
-            tetromino = holder.swap(tetromino);
+            tetromino = holder.swap(normalizedTetromino);
             tetromino.x = initialPosition;
             tetromino.y = 0;
         } else {

@@ -28,7 +28,7 @@ public class TetrominoRender implements Drawable {
     }
 
     public Tetromino normalizeTetrominoes(Tetromino tetromino) {
-        if (isI(tetromino)) return new Tetromino(tetromino.rotate(), tetromino.color);
+        if (isI(tetromino)) return new Tetromino(tetromino.rotate(), tetromino.color, tetromino.type);
         return tetromino;
     }
 
