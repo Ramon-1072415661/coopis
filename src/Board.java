@@ -64,9 +64,9 @@ public class Board extends JPanel implements ActionListener {
                 } else if (keyCode == KeyEvent.VK_UP) {
                     rotate(p2.tetromino);
                 } else if (keyCode == KeyEvent.VK_N) {
-                    p2.insertInHold();
-                } else if (keyCode == KeyEvent.VK_M) {
                     p2.swapTetromino();
+                } else if (keyCode == KeyEvent.VK_M) {
+                    p2.swapHolder();
                 } else if (keyCode == KeyEvent.VK_A) {
                     move(-1, p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_D) {
@@ -75,10 +75,10 @@ public class Board extends JPanel implements ActionListener {
                     drop(p1.tetromino);
                 } else if (keyCode == KeyEvent.VK_W) {
                     rotate(p1.tetromino);
-                } else if (keyCode == KeyEvent.VK_Q) { //insert
-                    p1.insertInHold();
-                } else if (keyCode == KeyEvent.VK_E) { //swap
+                } else if (keyCode == KeyEvent.VK_Q) {
                     p1.swapTetromino();
+                } else if (keyCode == KeyEvent.VK_E) {
+                    p1.swapHolder();
                 }
 
                 repaint();
@@ -327,7 +327,7 @@ public class Board extends JPanel implements ActionListener {
 
         // Create rotated tetromino
         int[][] rotatedShape = tetromino.rotate();
-        Tetromino rotated = new Tetromino(rotatedShape, tetromino.color);
+        Tetromino rotated = new Tetromino(rotatedShape, tetromino.color, tetromino.type);
         rotated.x = tetromino.x;
         rotated.y = tetromino.y;
 

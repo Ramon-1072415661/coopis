@@ -18,14 +18,14 @@ public class PlayerTests {
     }
 
     @Test
-    public void testInsertInHoldDoesNotThrow() {
-        assertDoesNotThrow(() -> player.insertInHold());
+    public void testSwapTetrominoDoesNotThrow() {
+        assertDoesNotThrow(() -> player.swapTetromino());
     }
 
     @Test
-    public void testSwapTetrominoDoesNotThrow() {
-        player.insertInHold();
-        assertDoesNotThrow(() -> player.swapTetromino());
+    public void testSwapHolderDoesNotThrow() {
+        player.swapTetromino();
+        assertDoesNotThrow(() -> player.swapHolder());
     }
 
     @Test

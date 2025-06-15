@@ -3,22 +3,31 @@ package tetromino;
 import utils.TetrominoResources;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tetromino {
+    public final TetrominoType type;
     public int[][] shape;
     public int x = 0, y = 0;
     public Color color;
     private int rotationState = 0; // Tracks current rotation (0-3)
 
-    public Tetromino(int[][] shape, Color color) {
+    public Tetromino(int[][] shape, Color color, TetrominoType type) {
+        this.type = type;
         this.shape = shape;
         this.color = color;
     }
 
+    public Tetromino(TetrominoType type) {
+        this.type = type;
+        this.shape = type.getShape();
+        this.color = type.getColor();
+    }
+
     public static Tetromino random() {
-        TetrominoResources resources = TetrominoResources.getInstance();
-        int i = resources.getRandom().nextInt(resources.getShapes().length);
-        return new Tetromino(resources.getShapes()[i], resources.getColors()[i]);
+        Random rand = TetrominoResources.getInstance().getRandom();
+        TetrominoType type = TetrominoType.random(rand);
+        return new Tetromino(type);
     }
 
     /**
