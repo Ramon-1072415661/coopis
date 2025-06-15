@@ -102,6 +102,7 @@ public class Board extends JPanel implements ActionListener {
         p2.reset();
         grid = new Color[rows][cols];
         gameOver = false;
+        actionPerformed(null); // First UI update before timer.start() to avoid a initial 400ms delay
         timer.start();
         timeRegister.start();
         score.reset();
