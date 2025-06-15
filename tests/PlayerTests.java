@@ -1,11 +1,10 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import tetromino.TetrominoQueue;
 import tetromino.TetrominoHolder;
-import tetromino.Tetromino;
+import tetromino.TetrominoQueue;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PlayerTests {
 
@@ -15,7 +14,7 @@ public class PlayerTests {
     public void setUp() {
         TetrominoQueue queue = new TetrominoQueue();
         TetrominoHolder holder = new TetrominoHolder();
-        player = new Player(0, queue, holder); // posição inicial 0
+        player = new Player(0, queue, holder);
     }
 
     @Test
@@ -25,7 +24,7 @@ public class PlayerTests {
 
     @Test
     public void testSwapTetrominoDoesNotThrow() {
-        player.insertInHold();  // preparar estado
+        player.insertInHold();
         assertDoesNotThrow(() -> player.swapTetromino());
     }
 

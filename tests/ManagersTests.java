@@ -1,8 +1,9 @@
-package managers;
-
+import managers.ScoreManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManagersTests {
 
@@ -11,7 +12,7 @@ public class ManagersTests {
     @BeforeEach
     public void setUp() {
         scoreManager = ScoreManager.getInstance();
-        scoreManager.reset();  // limpar estado entre testes, se necessário
+        scoreManager.reset();
     }
 
     @Test

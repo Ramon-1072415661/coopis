@@ -31,11 +31,6 @@ public class Queue<T> {
         size++;
     }
 
-    public Node<T> getFirstNode() {
-        return first;
-    }
-
-
     public T remove() {
         if (isEmpty()) throw new NoSuchElementException("Queue is empty.");
         T data = first.data;

@@ -1,11 +1,11 @@
-
-package dataStructures;
-
+import dataStructures.Queue;
+import dataStructures.Stack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DataStructuresTests {
 
@@ -21,14 +21,14 @@ public class DataStructuresTests {
     @Test
     public void testQueueAdd() {
         queue.add(10);
-        assertEquals(10, queue.getFirstNode().data);
+        assertEquals(10, queue.peek().data);
     }
 
     @Test
     public void testQueueMultipleElements() {
         queue.add(1);
         queue.add(2);
-        assertEquals(1, queue.getFirstNode().data);
+        assertEquals(1, queue.peek().data);
     }
 
     @Test

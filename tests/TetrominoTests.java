@@ -1,7 +1,8 @@
-package tetromino;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tetromino.Tetromino;
+import tetromino.TetrominoHolder;
+import tetromino.TetrominoQueue;
 
 import java.awt.Color;
 import java.util.Iterator;
@@ -28,9 +29,9 @@ public class TetrominoTests {
 
     @Test
     public void testRotate() {
-        int before = tetromino.getRotationState();
-        tetromino.rotate();
-        assertNotEquals(before, tetromino.getRotationState());
+        int[][] before = tetromino.shape;
+        int[][] after = tetromino.rotate();
+        assertNotEquals(before, after);
     }
 
     @Test
@@ -41,7 +42,6 @@ public class TetrominoTests {
 
     @Test
     public void testHolderStoresTetromino() {
-        // Adiciona diretamente à pilha usando iterator (se possível)
         Iterator<Tetromino> it = holder.iterator();
         assertNotNull(it);
     }
@@ -49,8 +49,9 @@ public class TetrominoTests {
     @Test
     public void testQueueProvidesIterator() {
         Iterator<Tetromino> it = queue.iterator();
-        assertTrue(it.hasNext(), "Iterator da fila deve ter elementos.");
+        assertTrue(it.hasNext(), "The queue iterator should have at least one element.");
+
         Tetromino t = it.next();
-        assertNotNull(t, "Iterator deve retornar um tetromino válido.");
+        assertNotNull(t, "The iterator should return a valid Tetromino instance.");
     }
 }
